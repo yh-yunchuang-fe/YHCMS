@@ -2,13 +2,18 @@
   <link href="https://image.yonghuivip.com/20170322/yhfont.css?time=1490595599855" rel="stylesheet">
 </head>
 <template name="basicLayout">
-  <div id="main" class="yhcms-main-container"> 
+  <div id="main" class="yhcms-main-container">
     <header class="yhcms-main-header">
       {{> Template.dynamic template=header}}
     </header>
     {{> Template.dynamic template=content}}
     {{#if modalOpen}}
       {{> Modal}}
+    {{/if}}
+    {{#if showSpin}}
+      <div class="overlay">
+        {{> spin}}
+      </div>
     {{/if}}
     <footer>
     </footer>

@@ -1,5 +1,5 @@
 function renderBasic(template) {
-  if (!Meteor.userId()) {
+  if (!Meteor.userId() && template !== 'home') {
     FlowRouter.go('/');
   }
   return BlazeLayout.render('basicLayout',{

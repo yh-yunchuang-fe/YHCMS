@@ -1,0 +1,49 @@
+import { Meteor } from 'meteor/meteor';
+import { DBhtml, Htmls } from '../../universal/collections';
+import fs from 'fs';
+import path from 'path';
+import { exec } from 'child_process';
+import config from '../../config.json';
+
+const projPath = path.join(config.uplaodPath, 'uploads');
+
+function htmlUploaded(file) {
+  console.log(file.name);
+  file.name = file.name.replace(/\s+/g, '');
+  const projHtmlPath = path.join(projPath, `/html/${file.meta.proj}`);
+  fs.rename(file.path, `${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
+      if (err) {
+          DBhtml.remove({ fileId: file._id });
+          Htmls.remove({ _id: file._id });
+          throw err;
+      }
+      fs.stat(`${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err, stats) {
+          if (err) {
+              DBhtml.remove({ fileId: file._id });
+              Htmls.remove({ _id: file._id });
+              throw err;
+          }
+          exec(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && rm ${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
+            if (err) {
+              console.log(err);
+              DBhtml.remove({ fileId: file._id });
+              Htmls.remove({ _id: file._id });
+            } else {
+              Meteor.setTimeout(() => {
+                  DBhtml.update({ fileId: file._id }, { $set: { percent: 100 } });
+              }, 1000);
+              Meteor.setTimeout(() => {
+                  if (DBhtml.find({ dirName: file.name.split('.')[0], projId: file.meta.projId }).count() === 0) {
+                    DBhtml.update({ fileId: file._id }, { $set: { dirName: file.name.split('.')[0], uploading: false, openUrl: `http://${config.domain}/html/${file.meta.proj}/${file.name.split('.')[0]}/index.html`, filePath: `${projHtmlPath}/${file.name.split('.')[0]}` } });
+                  } else {
+                    DBhtml.remove({ fileId: file._id });
+                  }
+                  Htmls.remove({ _id: file._id });
+              }, 1500);
+            }
+          }));
+      }));
+  }));
+}
+
+export default htmlUploaded;

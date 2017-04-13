@@ -15,12 +15,19 @@
       </div>
     </div>
   {{else}}
-    <button type="button" class="btn btn-warning" id="cssCreate">生成CSS</button>
-  {{/if}}
-  {{#if createStatus.url}}
-    <div class="url_address">
-      <span>url地址：</span>
-      <span>{{createStatus.url}}</span>
+    {{#if view}}
+    <div class="btn-group" style="margin-left:25px;" role="group" aria-label="...">
+      <button type="button" class="btn btn-warning" style="border-radius: 8px;" id="cssCreate">生成CSS</button>
+      <button type="button" class="btn btn-danger" style="margin-left:25px;border-radius: 8px;" id="delete">删除</button>
     </div>
+    {{/if}}
   {{/if}}
+  {{#each cssUrl in cssUrls}}
+    <div class="url_address">
+      <div class="url_content">
+        <span>生成时间: {{cssUrl.createAt}}</span><br/>
+        <span>url地址: {{cssUrl.url}}</span>
+      </div>
+    </div>
+  {{/each}}
 </template>

@@ -16,3 +16,13 @@ Template.ProjectBtn.events({
     }
   }
 });
+
+Template.ProjectBtn.helpers({
+  view: () => {
+    if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.isView) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+})

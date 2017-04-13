@@ -3,21 +3,21 @@ import { ReactiveVar } from "meteor/reactive-var";
 import willdeleteStore from '../../stores/uistates/willdelete.store';
 import { initStore, setStore, getStore } from '../../stores/uiactions/willdelete.action';
 
-Template.showfile.onCreated(function() {
+Template.htmlfile.onCreated(function() {
   this.clicked = new ReactiveVar(false);
   initStore();
-  this.currentData = new ReactiveVar(Template.currentData().image);
+  this.currentData = new ReactiveVar(Template.currentData().html);
 })
 
-Template.showfile.events({
-  'click .show-file'(event, instance) {
+Template.htmlfile.events({
+  'click .htmlfile'(event, instance) {
     const fileId = instance.currentData.get().fileId;
     const collections = getStore();
-    if (!collections.image.includes(fileId)) {
-      collections.image.push(fileId);
+    if (!collections.html.includes(fileId)) {
+      collections.html.push(fileId);
     } else {
-      const position = collections.image.indexOf(fileId);
-      collections.image.splice(position, 1);
+      const position = collections.html.indexOf(fileId);
+      collections.html.splice(position, 1);
     }
     setStore(collections);
     const clicked = instance.clicked.get();
@@ -25,7 +25,7 @@ Template.showfile.events({
   }
 })
 
-Template.showfile.helpers({
+Template.htmlfile.helpers({
   opacity: () => {
     if (Template.instance().clicked.get()) {
         return 1;

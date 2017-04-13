@@ -1,12 +1,12 @@
-<template name="imageEditor">
+<template name="htmlEditor">
   <div class="title">
     <span>{{proj.name}}</span>
   </div>
-  <div class="image-editor-page">
-    {{#each image in images}}
-      {{> showfile url=image.src image=image}}
+  <div class="html-editor-page">
+    {{#each html in Htmls}}
+      {{> htmlfile html=html}}
     {{/each}}
-    {{> addFile type="image/png,image/gif,image/jpeg"}}
+    {{> addFile type=".zip"}}
   </div>
   {{#if view}}
     <div class="btn-group" role="group" aria-label="...">

@@ -5,6 +5,7 @@
   margin-left: 15px;
   text-align: center;
   margin-top: 20px;
+  position: relative;
 }
 .svgfile svg{
   width: 100px;
@@ -18,4 +19,22 @@
 }
 .svgfile_progress .progress{
   height: 7px;
+}
+.mask {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  position: absolute;
+  background-color: rgba(0, 0, 0, .60);
+  opacity: 1;
+  z-index: 1;
+  left: 0;
+  top: 0px;
+}
+.mask span{
+  font-size: 22px;
+  display: block;
+  margin-top: 37px;
+  color: white;
+  font-family: cursive;
 }

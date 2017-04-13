@@ -1,18 +1,19 @@
 import { Template } from 'meteor/templating';
-import { DBimage, Projects } from '../../../universal/collections';
+import { Projects, DBhtml } from '../../../universal/collections';
 import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
 import { getStore } from '../../stores/uiactions/willdelete.action';
 
-Template.imageEditor.onCreated(function() {})
+Template.htmlEditor.onCreated(function() {
+})
 
-Template.imageEditor.events({
+Template.htmlEditor.events({
   'click #delete'(event, instance) {
     if (getStore().html.length === 0) {
       alert('请至少选中一项');
       return;
     }
     showSpin();
-    Meteor.call('deleteImage', getStore().image, (err, result) => {
+    Meteor.call('deleteHtml', getStore().html, (err, result) => {
       if (!err) {
         console.log(result);
         alert(result);
@@ -22,12 +23,12 @@ Template.imageEditor.events({
   }
 })
 
-Template.imageEditor.helpers({
-    images: () => {
+Template.htmlEditor.helpers({
+    Htmls: () => {
       if (!Meteor.userId()) {
         return FlowRouter.go('/');
       }
-      return DBimage.find({ projId: FlowRouter.getParam('projectid') });
+      return DBhtml.find({ projId: FlowRouter.getParam('projectid') });
     },
     proj: () => {
       const _id = FlowRouter.getParam('projectid');

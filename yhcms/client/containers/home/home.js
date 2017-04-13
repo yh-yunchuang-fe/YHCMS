@@ -12,7 +12,7 @@ import {
 Template.home.onCreated(function(){
 })
 
-const types = ['image', 'svg'];
+const types = ['image', 'svg', 'html'];
 
 Template.home.helpers({
   openProject: ()=>{

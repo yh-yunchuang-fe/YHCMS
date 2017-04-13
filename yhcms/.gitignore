@@ -1,4 +1,4 @@
 node_modules/
 uploads
 secret.json
-secret_test.json
+secret_local.json

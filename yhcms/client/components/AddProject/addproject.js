@@ -28,6 +28,7 @@ Template.addProject.events({
     Projects.insert({
       name: projectname,
       type: projecttype,
+      cssUrl: [],
       createdAt: new Date().getTime()
     });
     Meteor.call('createDir', projectname, projecttype);

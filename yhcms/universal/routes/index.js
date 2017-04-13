@@ -16,6 +16,10 @@ function route(FlowRouter) {
     name:'svgeditor',
     action: renderBasic.bind(this,'svgEditor')
   })
+  FlowRouter.route('/html/:projectid',{
+    name:'htmleditor',
+    action: renderBasic.bind(this,'htmlEditor')
+  })
   FlowRouter.notFound = {
     action: renderSlim.bind(this,'notFound')
   }

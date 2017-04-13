@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
-import { openModal, closeModal } from '../../stores/uiactions/modal.action';
+import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
+import { getStore } from '../../stores/uiactions/willdelete.action';
 import { DBsvg, Projects } from '../../../universal/collections';
 import { ReactiveVar } from "meteor/reactive-var";
 
@@ -16,21 +17,33 @@ Template.svgEditor.events({
     createStatus.createing = true;
     instance.createStatus.set(createStatus);
     const project = Projects.findOne({ _id: FlowRouter.getParam('projectid') });
-    Meteor.call("createCss", project.name, (err, result) => {
+    Meteor.call("createCss", project,  (err, result) => {
           if(!err){
-            console.log(result);
             createStatus.percent = 100;
             instance.createStatus.set(createStatus);
             setTimeout(Meteor.bindEnvironment(
               () => {
                 createStatus.createing = false;
-                createStatus.url = result;
                 instance.createStatus.set(createStatus);
                 alert('url is => ' + result);
               }
             ), 1000);
           }
       });
+  },
+  'click #delete'(event, instance) {
+    if (getStore().html.length === 0) {
+      alert('请至少选中一项');
+      return;
+    }
+    showSpin();
+    Meteor.call('deleteSvg', getStore().svg, (err, result) => {
+      if (!err) {
+        console.log(result);
+        alert(result);
+        closeSpin();
+      }
+    });
   }
 })
 
@@ -45,7 +58,23 @@ Template.svgEditor.helpers({
       const _id = FlowRouter.getParam('projectid');
       return Projects.findOne({ _id: _id });
     },
-    createStatus: function () {
-      return Template.instance().createStatus.get();
+    cssUrls: function () {
+      const _id = FlowRouter.getParam('projectid');
+      let cssUrl = [];
+      const project = Projects.findOne({ _id: _id });
+      if (project && project.cssUrl) {
+        project.cssUrl.map((key) => {
+          key.createAt = new Date(key.createAt).toLocaleString();
+        });
+        cssUrl = project.cssUrl;
+      }
+      return cssUrl;
+    },
+    view: () => {
+      if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.isView) {
+        return true;
+      } else {
+        return false;
+      }
     }
 })
