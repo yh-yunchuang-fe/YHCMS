@@ -1,22 +1,22 @@
 <template name="htmlfile">
-  <div class="content">
-    <div class="htmlfile">
-      <div class="dirname">
-        <span>{{html.dirName}}</span>
-      </div>
+	<li class="html_li">
+		<div>
+			<div>
+				<h4 title="{{html.dirName}}">{{html.dirName}}</h4>
+			</div>
       {{#if html.uploading}}
-      <div class="htmlfile_progress">
-        <div class="progress">
-          <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{html.percent}}%"></div>
+        <div class="htmlfile_progress">
+          <div class="progress">
+            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{html.percent}}%"></div>
+          </div>
         </div>
-      </div>
       {{/if}}
-      <div class="html-mask" style="opacity: {{opacity}}">
-        <span>待删除</span>
-      </div>
-    </div>
-    <div class="choose">
-      <a target="view_window" href="{{html.openUrl}}">查看</a>
-    </div>
-  </div>
+			<div class="html-mask" style="display: {{display}}">
+				<span>待删除</span>
+			</div>
+			<div class="look_btn">
+				<a target="_blank">查看</a>
+			</div>
+		</div>
+	</li>
 </template>

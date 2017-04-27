@@ -11,17 +11,19 @@ Template.svgfile.onCreated(function() {
 
 Template.svgfile.events({
   'click .svgfile'(event, instance) {
-    const fileId = instance.currentData.get().fileId;
-    const collections = getStore();
-    if (!collections.svg.includes(fileId)) {
-      collections.svg.push(fileId);
-    } else {
-      const position = collections.svg.indexOf(fileId);
-      collections.svg.splice(position, 1);
+    if (Meteor.user() && Meteor.user().profile.isView) {
+      const fileId = instance.currentData.get().fileId;
+      const collections = getStore();
+      if (!collections.svg.includes(fileId)) {
+        collections.svg.push(fileId);
+      } else {
+        const position = collections.svg.indexOf(fileId);
+        collections.svg.splice(position, 1);
+      }
+      setStore(collections);
+      const clicked = instance.clicked.get();
+      instance.clicked.set(!clicked);
     }
-    setStore(collections);
-    const clicked = instance.clicked.get();
-    instance.clicked.set(!clicked);
   }
 })
 
@@ -32,5 +34,12 @@ Template.svgfile.helpers({
     } else {
       return 0;
     }
+  },
+  svgName: () => {
+    const svg = Template.instance().currentData.get();
+    if (svg) {
+      return svg.name.split('.svg')[0]
+    }
+    return '';
   }
 })

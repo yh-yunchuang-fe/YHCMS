@@ -1,8 +1,16 @@
 <template name="ProjectBtn">
   {{#unless addNew}}
-  <div class="project-btn">
-    {{project.name}}<br/>
-    {{project.type}}
+  <div class="content">
+    <div class="project-btn">
+      {{project.name}}<br/>
+      {{project.type}}
+    </div>
+    <div class="proj_mask" style="display: {{display}}">
+      <span>待删除</span>
+    </div>
+    <div class="look_proj">
+      <span>查看</span>
+    </div>
   </div>
   {{else}}
   {{#if view}}

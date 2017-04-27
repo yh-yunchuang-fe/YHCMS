@@ -11,17 +11,23 @@ Template.showfile.onCreated(function() {
 
 Template.showfile.events({
   'click .show-file'(event, instance) {
-    const fileId = instance.currentData.get().fileId;
-    const collections = getStore();
-    if (!collections.image.includes(fileId)) {
-      collections.image.push(fileId);
-    } else {
-      const position = collections.image.indexOf(fileId);
-      collections.image.splice(position, 1);
+    if (Meteor.user() && Meteor.user().profile.isView) {
+      const fileId = instance.currentData.get().fileId;
+      const collections = getStore();
+      if (!collections.image.includes(fileId)) {
+        collections.image.push(fileId);
+      } else {
+        const position = collections.image.indexOf(fileId);
+        collections.image.splice(position, 1);
+      }
+      setStore(collections);
+      const clicked = instance.clicked.get();
+      instance.clicked.set(!clicked);
     }
-    setStore(collections);
-    const clicked = instance.clicked.get();
-    instance.clicked.set(!clicked);
+  },
+  'click .look_proj'(event, instance) {
+    event.stopPropagation();
+    window.open(instance.currentData.get().src)
   }
 })
 

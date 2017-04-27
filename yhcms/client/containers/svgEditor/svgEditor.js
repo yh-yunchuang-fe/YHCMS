@@ -32,7 +32,7 @@ Template.svgEditor.events({
       });
   },
   'click #delete'(event, instance) {
-    if (getStore().html.length === 0) {
+    if (getStore().svg.length === 0) {
       alert('请至少选中一项');
       return;
     }
@@ -44,6 +44,13 @@ Template.svgEditor.events({
         closeSpin();
       }
     });
+  },
+  'click #downloadSVG'(event, instance) {
+    if (getStore().svg.length === 0) {
+      alert('请至少选中一项');
+      return;
+    }
+    $('#downloadSVGFrame').attr('src', `/downloadSVG?fileIds=${getStore().svg.join(',')}`);
   }
 })
 
@@ -53,6 +60,10 @@ Template.svgEditor.helpers({
         return FlowRouter.go('/');
       }
       return DBsvg.find({ projId: FlowRouter.getParam('projectid') });
+    },
+    createStatus: () => {
+      return Template.instance().createStatus.get();
+      // return
     },
     proj: () => {
       const _id = FlowRouter.getParam('projectid');

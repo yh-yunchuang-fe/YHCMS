@@ -6,11 +6,26 @@
   flex-wrap: wrap;
 }
 .add-file {
-  margin-left: 15px;
-  width: 100px;
-  height: 100px;
-  text-align: center;
-  margin-top: 20px;
+    margin-left: 35px;
+    width: 80px;
+    display: inline-block;
+    height: 80px;
+    text-align: center;
+    margin-top: 2px;
+    border: 1px solid #555;
+    position: relative;
+    margin-top: 0px;
+}
+.add-file .yhicon-plus {
+  line-height: 80px;
+}
+.add-file #filer {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    left: 0;
+    outline: none;
+    opacity: 0;
 }
 .title {
   text-align: center;
@@ -18,3 +33,53 @@
 .title span{
   font-size: 50px;
 }
+.contentBox { padding-top: 20px; }
+.contentBox li {
+   width: 170px;
+    padding: 15px 0 15px 30px;
+    border: 1px solid rgba(0, 0, 0, .075);
+    float: left;
+    margin-left: 30px;
+    margin-bottom: 35px;
+    text-align: center;
+    position: relative;
+    webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+}
+.contentBox li h4 { height: 30px; line-height: 30px;   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer;}
+.contentBox li h4:hover { color: red;  }
+.contentBox li .html-mask {
+    width: 140px;
+    height: 81px;
+    text-align: center;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    left: 29px;
+    border-radius: 0 10px 10px 0;
+    top: 0px;
+}
+.contentBox li .html-mask span {
+    font-size: 20px;
+    display: block;
+    line-height: 80px;
+    color: white;
+    font-family: cursive;
+    cursor: pointer;
+}
+.contentBox li .look_btn {
+    position: absolute;
+    width: 30px;
+    top: 0px;
+    left: -1px;
+    height: 81px;
+    /* border-radius: 50% 50% 0 0; */
+    background-color: #337ab7;
+    line-height: 31px;
+    color: #fff;
+    z-index: 1;
+    border-radius: 10px 0 0 10px;
+    webkit-box-shadow: 0px 1px 5px 0 rgba(0,0,0,0.4);
+    box-shadow: 0px 1px 5px 0 rgba(0,0,0,0.4);
+}
+.contentBox li .look_btn a { color: #fff;writing-mode: tb-rl; margin-top: 20px; letter-spacing:10px;}
+.contentBox li .look_btn a:hover{ text-decoration:none; }

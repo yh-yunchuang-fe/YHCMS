@@ -4,3 +4,5 @@ export { default as deleteHtml } from './deleteHtml';
 export { default as svgUploaded } from './svgUploaded';
 export { default as imageUploaded } from './imageUploaded';
 export { default as htmlUploaded } from './htmlUploaded';
+export { default as deleteProj } from './deleteProj';
+export { default as downloadSVG } from './downloadSVG';

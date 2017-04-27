@@ -4,7 +4,8 @@ function initStore() {
   willdeleteStore.set('collections', {
     svg: [],
     image: [],
-    html: []
+    html: [],
+    proj: []
   });
 }
 

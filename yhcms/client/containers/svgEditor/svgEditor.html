@@ -19,6 +19,7 @@
     <div class="btn-group" style="margin-left:25px;" role="group" aria-label="...">
       <button type="button" class="btn btn-warning" style="border-radius: 8px;" id="cssCreate">生成CSS</button>
       <button type="button" class="btn btn-danger" style="margin-left:25px;border-radius: 8px;" id="delete">删除</button>
+      <button type="button" class="btn btn-success" style="margin-left:25px;border-radius: 8px;" id="downloadSVG">下载svg</button>
     </div>
     {{/if}}
   {{/if}}
@@ -30,4 +31,5 @@
       </div>
     </div>
   {{/each}}
+  <iframe style="display:none;" id="downloadSVGFrame"></iframe>
 </template>

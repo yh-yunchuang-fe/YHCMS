@@ -8,9 +8,10 @@ const projPath = path.join(config.uplaodPath, 'uploads');
 
 function svgUploaded(file) {
   console.log('upload file name is ' + file.name);
+  file.name = file.name.replace(/\s+/g, '');
   const fileCount = DBsvg.find({ name: file.name, projId: file.meta.projId, uploading: false }).count();
   const src = fs.readFileSync(file.path, 'utf8');
-  const projSvgPath = path.join(projPath, `/svg/${file.meta.proj}`);
+  const projSvgPath = path.join(projPath, `/svg/${file.meta.proj.replace(/\s+/g, '')}`);
   fs.rename(file.path, `${projSvgPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
     if (err) {
       DBsvg.remove({fileId: file._id});

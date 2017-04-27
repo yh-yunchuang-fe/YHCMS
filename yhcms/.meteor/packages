@@ -30,3 +30,6 @@ twbs:bootstrap
 aldeed:collection2
 ian:accounts-ui-bootstrap-3
 accounts-password
+http
+cfs:http-methods
+froatsnook:request

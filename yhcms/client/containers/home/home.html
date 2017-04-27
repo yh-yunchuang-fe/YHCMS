@@ -6,6 +6,11 @@
       {{/each}}
       {{> ProjectBtn addNew=1 callback=addProject}}
     </div>
+    {{#if view}}
+      <div class="btn-group" style="margin-left:15px;" role="group" aria-label="...">
+        <button type="button" class="btn btn-danger" style="border-radius: 8px;" id="delete">删除</button>
+      </div>
+    {{/if}}
   {{else}}
     {{> notlogin}}
   {{/if}}

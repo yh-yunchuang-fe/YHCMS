@@ -3,6 +3,7 @@ const willdeleteStore = new ReactiveDict('willdeleteStore');
 willdeleteStore.set('collections', {
   svg: [],
   image: [],
-  html: []
+  html: [],
+  proj: []
 });
 export default willdeleteStore;
