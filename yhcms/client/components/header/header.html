@@ -8,6 +8,13 @@
         <span class="icon-bar"></span>
       </button>
     </div>
+    {{#if show}}
+    <div class="searchBar">
+      <span>搜索</span>
+      <input type="text" placeholder="search" id="search"/>
+      <i class="yhicon-search"></i>
+    </div>
+    {{/if}}
     <div class="collapse navbar-collapse" id="navigation">
       <ul class="nav navbar-nav navbar-right">
         {{> loginButtons}}

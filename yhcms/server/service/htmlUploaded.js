@@ -11,40 +11,62 @@ function htmlUploaded(file) {
   console.log(file.name);
   file.name = file.name.replace(/\s+/g, '');
   const projHtmlPath = path.join(projPath, `/html/${file.meta.proj.replace(/\s+/g, '')}`);
-  fs.rename(file.path, `${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
+  return new Promise((resolve, reject) => {
+    fs.rename(file.path, `${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
       if (err) {
-          DBhtml.remove({ fileId: file._id });
-          Htmls.remove({ _id: file._id });
-          throw err;
+        DBhtml.remove({ fileId: file._id });
+        Htmls.remove({ _id: file._id });
+        console.log(err);
+        reject({
+          flag: false,
+          err: err
+        });
       }
       fs.stat(`${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err, stats) {
+        if (err) {
+          DBhtml.remove({ fileId: file._id });
+          Htmls.remove({ _id: file._id });
+          console.log(err);
+          reject({
+            flag: false,
+            err: err
+          });
+        }
+        console.log(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && rm ${projHtmlPath}/${file.name}`);
+        exec(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && rm ${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
           if (err) {
-              DBhtml.remove({ fileId: file._id });
+            console.log(err);
+            DBhtml.remove({ fileId: file._id });
+            Htmls.remove({ _id: file._id });
+            reject({
+              flag: false,
+              err: err
+            });
+          } else {
+            Meteor.setTimeout(() => {
+              DBhtml.update({ fileId: file._id }, { $set: { percent: 100 } });
+            }, 1000);
+            Meteor.setTimeout(() => {
+              if (DBhtml.find({ dirName: file.name.split('.zip')[0], projId: file.meta.projId }).count() === 0) {
+                DBhtml.update({ fileId: file._id }, { $set: { dirName: file.name.split('.zip')[0], uploading: false, openUrl: `http://${config.domain}/html/${file.meta.proj}/${file.name.split('.zip')[0]}/index.html`, filePath: `${projHtmlPath}/${file.name.split('.zip')[0]}` } });
+                resolve({
+                  flag: true,
+                  msg: 'add ok'
+                });
+              } else {
+                DBhtml.remove({ fileId: file._id });
+                resolve({
+                  flag: true,
+                  msg: 'update ok'
+                });
+              }
               Htmls.remove({ _id: file._id });
-              throw err;
+            }, 1500);
           }
-          console.log(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && rm ${projHtmlPath}/${file.name}`);
-          exec(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && rm ${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
-            if (err) {
-              console.log(err);
-              DBhtml.remove({ fileId: file._id });
-              Htmls.remove({ _id: file._id });
-            } else {
-              Meteor.setTimeout(() => {
-                  DBhtml.update({ fileId: file._id }, { $set: { percent: 100 } });
-              }, 1000);
-              Meteor.setTimeout(() => {
-                  if (DBhtml.find({ dirName: file.name.split('.zip')[0], projId: file.meta.projId }).count() === 0) {
-                    DBhtml.update({ fileId: file._id }, { $set: { dirName: file.name.split('.zip')[0], uploading: false, openUrl: `http://${config.domain}/html/${file.meta.proj}/${file.name.split('.zip')[0]}/index.html`, filePath: `${projHtmlPath}/${file.name.split('.zip')[0]}` } });
-                  } else {
-                    DBhtml.remove({ fileId: file._id });
-                  }
-                  Htmls.remove({ _id: file._id });
-              }, 1500);
-            }
-          }));
+        }));
       }));
-  }));
+    }));
+  });
 }
 
 export default htmlUploaded;

@@ -7,7 +7,7 @@ Template.imageEditor.onCreated(function() {})
 
 Template.imageEditor.events({
   'click #delete'(event, instance) {
-    if (getStore().html.length === 0) {
+    if (getStore().image.length === 0) {
       alert('请至少选中一项');
       return;
     }

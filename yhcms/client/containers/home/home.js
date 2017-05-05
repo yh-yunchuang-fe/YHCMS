@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 import { openModal, closeModal } from '../../stores/uiactions/modal.action';
 import { Projects } from '../../../universal/collections';
 import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
+import { getStore as getSearchStore } from '../../stores/uiactions/search.action';
 import { getStore } from '../../stores/uiactions/willdelete.action';
 
 Template.home.onCreated(function(){
@@ -45,7 +46,11 @@ Template.home.helpers({
     }
   },
   projects: ()=>{
-    return Projects.find({})
+    const searchObj = {};
+    if (getSearchStore() !== '') {
+      searchObj.name = new RegExp(`${getSearchStore()}`);
+    }
+    return Projects.find(searchObj);
   },
   user: () => {
     return Meteor.userId();

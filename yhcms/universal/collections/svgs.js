@@ -12,7 +12,7 @@ const projPath = config.uplaodPath;
 const Svgs = new FilesCollection({
   collectionName: 'Svgs',
   allowClientCode: true,
-  debug: true,
+  // debug: true,
   storagePath: path.join(projPath, 'uploads/svg'),
   onBeforeUpload: (file) => {
     if(file.size <= 10485760 && /svg/i.test(file.extension)) {

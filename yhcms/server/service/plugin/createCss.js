@@ -13,7 +13,7 @@ function createCss(proj) {
         svg2css({
             baseDir: projPath,
             cssFilePath: config.cssFilePath,
-            svgDir: `svg/${proj.name}`,
+            svgDir: `svg/${proj.name.replace(/\s+/g, '')}`,
             iconName: 'yhicon'
         }, Meteor.bindEnvironment((res) => {
             if (res.result === true) {
