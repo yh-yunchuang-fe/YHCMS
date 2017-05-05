@@ -1,6 +1,4 @@
 node_modules/
 uploads
-config.json
-config_local.json
 secret.json
 secret_local.json
