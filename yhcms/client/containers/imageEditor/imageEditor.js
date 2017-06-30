@@ -22,12 +22,31 @@ Template.imageEditor.events({
   }
 })
 
+function copy(obj) {
+  const newObj = {};
+  for (let prop in obj) {
+    if (prop !== '') {
+      newObj[prop] = obj[prop];
+    }
+  }
+  return newObj;
+}
+
 Template.imageEditor.helpers({
     images: () => {
       if (!Meteor.userId()) {
         return FlowRouter.go('/');
       }
-      return DBimage.find({ projId: FlowRouter.getParam('projectid') });
+      const imgs = DBimage.find({ projId: FlowRouter.getParam('projectid') });
+      const _imgs = [];
+      imgs.map((img) => {
+        if (!img.uploading) {
+          img.src = `${img.src}?v=${Date.now()}`;
+        }
+        const _img = copy(img);
+        _imgs.push(_img);
+      });
+      return _imgs;
     },
     proj: () => {
       const _id = FlowRouter.getParam('projectid');

@@ -12,10 +12,10 @@ const Htmls = new FilesCollection({
   debug: true,
   storagePath: path.join(projPath, 'uploads/html'),
   onBeforeUpload: (file) => {
-    if(file.size <= 10485760 && /zip/i.test(file.extension)) {
+    if(file.size <= 104857600 && /zip/i.test(file.extension)) {
       return true;
     }else {
-      return 'Please upload image, with size equal or less than 10MB';
+      return 'Please upload image, with size equal or less than 100MB';
     }
   },
   onInitiateUpload: (file) => {

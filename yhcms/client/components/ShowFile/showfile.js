@@ -27,7 +27,7 @@ Template.showfile.events({
   },
   'click .look_proj'(event, instance) {
     event.stopPropagation();
-    window.open(instance.currentData.get().src)
+    window.open(`${instance.currentData.get().src.split('?v=')[0]}?v=${Date.now()}`)
   }
 })
 

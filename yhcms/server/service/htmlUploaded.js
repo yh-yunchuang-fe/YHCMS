@@ -33,7 +33,7 @@ function htmlUploaded(file) {
           });
         }
         console.log(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && rm ${projHtmlPath}/${file.name}`);
-        exec(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && rm ${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
+        exec(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && mv ${projHtmlPath}/${file.name} ${projHtmlPath}/${file.name.split('.zip')[0]}/${file.name}`, Meteor.bindEnvironment(function(err) {
           if (err) {
             console.log(err);
             DBhtml.remove({ fileId: file._id });
