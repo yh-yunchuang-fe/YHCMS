@@ -32,8 +32,8 @@ function htmlUploaded(file) {
             err: err
           });
         }
-        console.log(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && rm ${projHtmlPath}/${file.name}`);
-        exec(`unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && mv ${projHtmlPath}/${file.name} ${projHtmlPath}/${file.name.split('.zip')[0]}/${file.name}`, Meteor.bindEnvironment(function(err) {
+        console.log(`. /etc/profile && unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && mv ${projHtmlPath}/${file.name} ${projHtmlPath}/${file.name.split('.zip')[0]}/${file.name}`);
+        exec(`. /etc/profile && unzip -o ${projHtmlPath}/${file.name} -d ${projHtmlPath}/ && chmod 775 ${projHtmlPath}/${file.name.split('.zip')[0]} && mv ${projHtmlPath}/${file.name} ${projHtmlPath}/${file.name.split('.zip')[0]}/${file.name}`, Meteor.bindEnvironment(function(err) {
           if (err) {
             console.log(err);
             DBhtml.remove({ fileId: file._id });
@@ -43,9 +43,6 @@ function htmlUploaded(file) {
               err: err
             });
           } else {
-            Meteor.setTimeout(() => {
-              DBhtml.update({ fileId: file._id }, { $set: { percent: 100 } });
-            }, 1000);
             Meteor.setTimeout(() => {
               if (DBhtml.find({ dirName: file.name.split('.zip')[0], projId: file.meta.projId }).count() === 0) {
                 DBhtml.update({ fileId: file._id }, { $set: { dirName: file.name.split('.zip')[0], uploading: false, openUrl: `http://${config.domain}/html/${file.meta.proj}/${file.name.split('.zip')[0]}/index.html`, filePath: `${projHtmlPath}/${file.name.split('.zip')[0]}` } });

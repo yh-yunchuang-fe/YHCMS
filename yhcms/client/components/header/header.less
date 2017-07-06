@@ -1,7 +1,32 @@
+.navbar-default {
+  background-color: rgb(27,31,35);
+  border-color: rgb(27,31,35);
+}
+.dropdown-toggle {
+  color: white;
+  font-family: monospace;
+}
 .searchBar {
   position: absolute;
-  top: 12px;
+  top: 10px;
   left: 15px;
+  span {
+    color: white;
+    font-family: serif;
+    font-size: 16px;
+    line-height: 30px;
+  }
+}
+.navbar-default .navbar-nav > li > a {
+    color: white;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    color: white;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    color: white;
+    background-color: transparent;
 }
 .searchBar input {
   border-radius: 8px;
@@ -10,9 +35,13 @@
   padding-left: 75px;
   width: 200px;
   margin-left: 12px;
+  height: 30px;
 }
 .searchBar i {
   position: absolute;
-  left: 221px;
-  top: 5px;
+  left: 190px;
+  top: 7px;
+}
+.navbar {
+  border-radius: 0px;
 }

@@ -9,7 +9,6 @@ function imageUploaded(file) {
   return new Promise((resolve, reject) => {
     upload2qiniu(file, Meteor.bindEnvironment(
       (res) => {
-        DBimage.update({ fileId: file._id }, { $set: { percent: 100 } });
         if (fileCount === 0) {
           Meteor.setTimeout(
             () => {

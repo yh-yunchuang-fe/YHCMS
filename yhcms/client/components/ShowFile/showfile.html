@@ -1,20 +1,37 @@
 <template name="showfile">
   <div class="show-file">
-    {{#if url}}
-      <img src={{url}} width="140" height="140">
-    {{/if}}
-    {{#if image.uploading}}
-      <div class="imagefile_progress">
-        <div class="progress">
-          <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{image.percent}}%"></div>
+    {{#if showprogress}}
+		<div class="circleProgress_wrapper">
+        <div class="wrapper right">
+            <div class="circleProgress rightcircle" style="transform: rotate({{right_trans}}deg)"></div>
         </div>
-      </div>
-    {{/if}}
-    <div class="show-mask" style="opacity: {{opacity}}">
-      <span>待删除</span>
-    </div>
-    <div class="look_proj">
-      <span>查看</span>
-    </div>
+        <div class="wrapper left">
+            <div class="circleProgress leftcircle" style="transform: rotate({{left_trans}}deg)"></div>
+        </div>
+				<h1>{{image.percent}}%</h1>
+	 </div>
+	 {{/if}}
+   <div class="prepare-delete">
+     <img src="/images/pd.png" alt="">
+     <span>待删除</span>
+   </div>
+		<a target="_blank">
+			<span id="{{image.fileId}}"></span>
+		</a>
+		<div class="html-top-cantainer" style="background-image: url('{{url}}')">
+		</div>
+		<div class="html-bottom-cantainer">
+			<div class="html-mask">
+				<span>查看</span>
+			</div>
+			<div class="bottom-bar">
+				<div class="bar-img" index="1">
+					<img src="/images/look.png" alt="">
+				</div>
+				<div class="bar-img" index="2" style="display: {{display}}">
+					<img src="/images/delete.png" alt="">
+				</div>
+			</div>
+		</div>
   </div>
 </template>

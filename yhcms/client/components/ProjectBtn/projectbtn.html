@@ -1,21 +1,38 @@
 <template name="ProjectBtn">
   {{#unless addNew}}
-  <div class="content">
-    <div class="project-btn">
-      {{project.name}}<br/>
-      {{project.type}}
-    </div>
-    <div class="proj_mask" style="display: {{display}}">
-      <span>待删除</span>
-    </div>
-    <div class="look_proj">
-      <span>查看</span>
-    </div>
+  <div class="proj">
+   <div class="prepare-delete">
+     <img src="/images/pd.png" alt="">
+     <span>待删除</span>
+   </div>
+		<a target="_blank">
+			<span id="{{image.fileId}}"></span>
+		</a>
+		<div class="html-top-cantainer">
+      <div class="proj-text">
+        项目类型: {{project.type}}
+      </div>
+      <div class="proj-text">
+        项目名称: {{project.name}}
+      </div>
+		</div>
+		<div class="html-bottom-cantainer">
+			<div class="html-mask">
+				<span>查看</span>
+			</div>
+			<div class="bottom-bar">
+				<div class="bar-img" index="1">
+					<img src="/images/look.png" alt="">
+				</div>
+				<div class="bar-img" index="2" style="display: {{display}}">
+					<img src="/images/delete.png" alt="">
+				</div>
+			</div>
+		</div>
   </div>
   {{else}}
   {{#if view}}
   <div class="project-btn">
-    <i class="yhicon-plus"></i>
   </div>
   {{/if}}
   {{/unless}}

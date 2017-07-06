@@ -1,9 +1,12 @@
 import { Template } from 'meteor/templating';
 import { DBimage, Projects } from '../../../universal/collections';
+import { ReactiveVar } from "meteor/reactive-var";
 import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
 import { getStore } from '../../stores/uiactions/willdelete.action';
 
-Template.imageEditor.onCreated(function() {})
+Template.imageEditor.onCreated(function() {
+  this.date = new ReactiveVar(Date.now());
+})
 
 Template.imageEditor.events({
   'click #delete'(event, instance) {
@@ -41,7 +44,7 @@ Template.imageEditor.helpers({
       const _imgs = [];
       imgs.map((img) => {
         if (!img.uploading) {
-          img.src = `${img.src}?v=${Date.now()}`;
+          img.src = `${img.src}?v=${Template.instance().date.get()}`;
         }
         const _img = copy(img);
         _imgs.push(_img);

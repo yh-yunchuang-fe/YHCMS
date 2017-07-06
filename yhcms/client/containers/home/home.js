@@ -1,11 +1,12 @@
 import { Template } from 'meteor/templating';
 import { openModal, closeModal } from '../../stores/uiactions/modal.action';
-import { Projects } from '../../../universal/collections';
+import { Projects, DBhtml } from '../../../universal/collections';
 import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
-import { getStore as getSearchStore } from '../../stores/uiactions/search.action';
+import { getStore as getSearchStore, setStore } from '../../stores/uiactions/search.action';
 import { getStore } from '../../stores/uiactions/willdelete.action';
 
 Template.home.onCreated(function(){
+  setStore('');
 })
 
 const types = ['image', 'svg', 'html'];
@@ -48,8 +49,18 @@ Template.home.helpers({
   projects: ()=>{
     const searchObj = {};
     if (getSearchStore() !== '') {
-      searchObj.name = new RegExp(`${getSearchStore()}`);
+      searchObj['$or'] = [{ name: new RegExp(`${getSearchStore()}`) }];
+      const html = DBhtml.find({ dirName: new RegExp(`${getSearchStore()}`) });
+      const ids = [];
+      html.map((key) => {
+        ids.push(key.projId);
+      });
+      if (ids.length > 0) {
+        searchObj['$or'].push({ _id: { $in: ids } });
+      }
     }
+    console.log(searchObj);
+    const project = Projects.find(searchObj);
     return Projects.find(searchObj);
   },
   user: () => {

@@ -87,6 +87,9 @@ function MQ_TRICK(instance, project, MQ) {
   MQ.map((mq, index) => {
     let upload = {};
     let uploadedType = '';
+    let model = {};
+    const time = Date.now();
+    let ID = null;
     if (mq.type === 'image/svg+xml') {
         upload = Svgs.insert({
             file: mq,
@@ -94,10 +97,12 @@ function MQ_TRICK(instance, project, MQ) {
             chunkSize: 'dynamic',
             meta: {
               proj: project.name,
-              projId: project._id
+              projId: project._id,
+              time: time
             }
         }, false);
         uploadedType = 'svgUploaded';
+        model = DBsvg;
     }
     if (mq.type === 'application/zip') {
       upload = Htmls.insert({
@@ -106,10 +111,12 @@ function MQ_TRICK(instance, project, MQ) {
           chunkSize: 'dynamic',
           meta: {
             proj: project.name,
-            projId: project._id
+            projId: project._id,
+            time: time
           }
       }, false);
       uploadedType = 'htmlUploaded';
+      model = DBhtml;
     }
     if (/image\/(jpeg|jpg|png)/.test(mq.type)) {
         upload = Images.insert({
@@ -118,16 +125,24 @@ function MQ_TRICK(instance, project, MQ) {
             chunkSize: 'dynamic',
             meta: {
               proj: project.name,
-              projId: project._id
+              projId: project._id,
+              time: time
             }
         }, false);
         uploadedType = 'imageUploaded';
+        model = DBimage;
     }
     upload.on('start', () => {
         instance.currentUpload.set(this);
     })
     upload.on('error', (err, fileObj) => {
       console.log(err);
+    })
+    upload.on('progress', (percent, fileObj) => {
+      if (!ID) {
+        ID = model.findOne({ 'meta.time': time })._id;
+      }
+      model.update({ _id: ID }, { $set: { percent } });
     })
     upload.on('end', (error, fileObj) => {
         if (error) {
