@@ -8,8 +8,8 @@ import { initStore, setStore, getStore } from '../../stores/uiactions/willdelete
 Template.showfile.onCreated(function() {
   this.clicked = new ReactiveVar(false);
   initStore();
-  this.isView = new ReactiveVar(Meteor.user().profile.isView);
   this.currentData = new ReactiveVar(Template.currentData().image);
+  this.isView = new ReactiveVar(Meteor.user().profile.isView);
 })
 
 Template.showfile.events({

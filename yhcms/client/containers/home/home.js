@@ -60,8 +60,7 @@ Template.home.helpers({
       }
     }
     console.log(searchObj);
-    const project = Projects.find(searchObj);
-    return Projects.find(searchObj);
+    return Projects.find(searchObj, { sort: { type: 1 } });
   },
   user: () => {
     return Meteor.userId();

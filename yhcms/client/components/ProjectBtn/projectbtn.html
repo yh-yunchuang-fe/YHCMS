@@ -9,11 +9,11 @@
 			<span id="{{image.fileId}}"></span>
 		</a>
 		<div class="html-top-cantainer">
-      <div class="proj-text">
-        项目类型: {{project.type}}
+      <div class="proj-text" style="font-size: 22px;">
+        {{project.type}}
       </div>
-      <div class="proj-text">
-        项目名称: {{project.name}}
+      <div class="proj-text" style="font-size: 26px; font-family: initial;">
+        {{project.name}}
       </div>
 		</div>
 		<div class="html-bottom-cantainer">
@@ -32,7 +32,8 @@
   </div>
   {{else}}
   {{#if view}}
-  <div class="project-btn">
+  <div class="proj project-btn">
+    <img src="/images/add.png" class="add-btn-image">
   </div>
   {{/if}}
   {{/unless}}
