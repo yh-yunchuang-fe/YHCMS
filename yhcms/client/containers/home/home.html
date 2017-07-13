@@ -1,6 +1,6 @@
 <template name="home">
   {{#if user}}
-    <div class="home-container">
+    <div class="home-container" id="home">
       {{#if view}}
       <div class="add-hover">
         <img src="/images/add-top.png" alt="">
@@ -8,6 +8,11 @@
       {{/if}}
       <div class="tab-wrap">
         <div class="under-line" style="left: {{left}}"></div>
+        {{#if goback}}
+        <div class="goBack">
+          <img src="/images/goback.png" alt="">
+        </div>
+        {{/if}}
         <div class="tab tab-html" index="html">
           <span>HTML</span>
         </div>
@@ -18,9 +23,18 @@
           <span style="padding-right: 7px;">SVG</span>
         </div>
       </div>
-      {{#each project in projects}}
-        {{> ProjectBtn project=project callback=openProject}}
-      {{/each}}
+      {{#if dir}}
+        {{#each projRele in projReles}}
+          <div class="html-dir">
+            <img src="/images/dir.png" alt="">
+            <span>{{projRele.rela}}</span>
+          </div>
+        {{/each}}
+      {{else}}
+        {{#each project in projects}}
+          {{> ProjectBtn project=project callback=openProject}}
+        {{/each}}
+      {{/if}}
       {{> ProjectBtn addNew=1 callback=addProject}}
     </div>
   {{else}}

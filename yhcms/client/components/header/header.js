@@ -10,6 +10,9 @@ Template.header.events({
   'input #search'(event, instance) {
     instance.searchValue.set(event.target.value);
     setStore(instance.searchValue.get());
+    const ele = document.getElementById('home');
+    window.home.data = (event.target.value === '');
+    ele.dispatchEvent(window.home);
   },
   'click .yhicon-search'(event, instance) {
     setStore(instance.searchValue.get());

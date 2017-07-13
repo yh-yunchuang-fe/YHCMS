@@ -5,6 +5,7 @@ import Htmls from './htmls';
 import DBsvg from './DBsvg';
 import DBimage from './DBimage';
 import DBhtml from './DBhtml';
+import ProjRele from './projRele';
 export {
   Projects,
   Images,
@@ -12,5 +13,6 @@ export {
   Htmls,
   DBsvg,
   DBimage,
-  DBhtml
+  DBhtml,
+  ProjRele
 }

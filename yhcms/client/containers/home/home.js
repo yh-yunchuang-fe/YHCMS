@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from "meteor/reactive-var";
 import { openModal, closeModal } from '../../stores/uiactions/modal.action';
-import { Projects, DBhtml } from '../../../universal/collections';
+import { Projects, DBhtml, ProjRele } from '../../../universal/collections';
 import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
 import { getStore as getSearchStore, setStore } from '../../stores/uiactions/search.action';
 import { getStore } from '../../stores/uiactions/willdelete.action';
@@ -9,12 +9,16 @@ import { getStore } from '../../stores/uiactions/willdelete.action';
 Template.home.onCreated(function(){
   setStore('');
   const findType = window.localStorage.getItem('findType');
+  this.rela = new ReactiveVar('');
+  this.dir = new ReactiveVar(true);
   if (findType) {
     this.findType = new ReactiveVar(findType);
   } else {
     window.localStorage.setItem('findType', 'html');
     this.findType = new ReactiveVar('html');
   }
+  window.home = document.createEvent('Event');
+  window.home.initEvent('search', true, true);
 })
 
 const types = ['image', 'svg', 'html'];
@@ -22,6 +26,7 @@ const types = ['image', 'svg', 'html'];
 Template.home.rendered = function() {
   this.autorun(() => {
     const findType = window.localStorage.getItem('findType');
+    Template.instance().dir.set(findType === 'html');
     let left = Template.instance().$(`.tab-${findType ? findType : 'html'} span`).offset().left;;
     Template.instance().$('.under-line').css('left', left - 20);
     Template.instance().$(`.tab-${findType ? findType : 'html'} span`).addClass('orange');
@@ -48,6 +53,10 @@ Template.home.events({
     const width = document.body.clientWidth;
     const type = instance.$(event.currentTarget).attr('index');
     instance.findType.set(type);
+    instance.dir.set(type === 'html');
+    if (type !== 'html') {
+      instance.rela.set('');
+    }
     window.localStorage.setItem('findType', type);
     const left = instance.$(`.tab-${type} span`).offset().left - 20;
     const underline = instance.$('.under-line');
@@ -62,6 +71,23 @@ Template.home.events({
   },
   'click .add-hover'(event, instance) {
     instance.$('.project-btn').click();
+    console.log(1);
+  },
+  'dblclick .html-dir'(event, instance) {
+    const rela = instance.$(event.currentTarget).find('span').text();
+    instance.dir.set(false);
+    instance.rela.set(rela);
+  },
+  'click .goBack'(event, instance) {
+    instance.dir.set(true);
+    instance.rela.set('');
+  },
+  'search .home-container'(event, instance) {
+    if (instance.findType.get() === 'html') {
+      instance.dir.set(event.originalEvent.data);
+    } else {
+      instance.dir.set(false);
+    }
   }
 });
 
@@ -85,7 +111,15 @@ Template.home.helpers({
   },
   projects: ()=>{
     const type = Template.instance().findType.get();
+    const rela = Template.instance().rela.get();
+    const dir = Template.instance().dir.get();
     const searchObj = { type };
+    if (type === 'html' && rela === '' && dir) {
+      return [];
+    }
+    if (rela !== '') {
+      searchObj.rela = rela;
+    }
     if (getSearchStore() !== '') {
       searchObj['$or'] = [{ name: new RegExp(`${getSearchStore()}`), type }];
       const html = DBhtml.find({ dirName: new RegExp(`${getSearchStore()}`) });
@@ -97,7 +131,7 @@ Template.home.helpers({
         searchObj['$or'].push({ _id: { $in: ids }, type });
       }
     }
-    return Projects.find(searchObj, { sort: { createAt: -1 } });
+    return Projects.find(searchObj, { sort: { createdAt: -1 } });
   },
   user: () => {
     return Meteor.userId();
@@ -108,5 +142,17 @@ Template.home.helpers({
     } else {
       return false;
     }
+  },
+  dir: () => {
+    return Template.instance().dir.get();
+  },
+  projReles: () => {
+    return ProjRele.find({});
+  },
+  goback: () => {
+    if (!Template.instance().dir.get() && Template.instance().findType.get() === 'html') {
+      return true;
+    }
+    return false;
   }
 })

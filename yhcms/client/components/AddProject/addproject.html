@@ -10,6 +10,21 @@
     </div>
     <div class="add-project-item">
       <div class="add-project-item-title">
+        项目归属
+      </div>
+      <div class="add-project-input-wrapper">
+        <select class="add-project-input" id="projectrela">
+          {{#each projRele in projReles}}
+            <option value="{{projRele.rela}}">{{projRele.rela}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="add-rela">
+        <img src="/images/add-rela.png" alt="">
+      </div>
+    </div>
+    <div class="add-project-item">
+      <div class="add-project-item-title">
         项目类型
       </div>
       <div class="add-project-input-wrapper">
