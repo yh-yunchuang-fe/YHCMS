@@ -10,6 +10,29 @@
   webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.4);
   box-shadow: 0 5px 15px rgba(0,0,0,0.4);
 }
+.show-file .img-name {
+  display: none;
+  position: absolute;
+  z-index: 999;
+  top: -93px;
+  right: -90px;
+  width: 130px;
+  height: 130px;
+}
+.show-file .img-name img {
+  width: 130px;
+  height: 130px;
+}
+.show-file .img-name span {
+  position: absolute;
+  text-align: center;
+  height: 100px;
+  display: inline-block;
+  width: 80px;
+  font-weight: 500;
+  top: 38px;
+  right: 25px;
+}
 .show-file .prepare-delete {
   display: none;
   z-index: 999;
@@ -54,6 +77,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  z-index: 999;
 }
 .show-file .html-mask {
   z-index: 999;
@@ -95,51 +119,52 @@
 .show-file .bottom-bar .bar-img {
   margin: 0px 0;
 }
-.circleProgress_wrapper{
-  width: 180px;
-  height: 180px;
+.show-file .circleProgress_wrapper{
+  height: 80px;
+  width: 139px;
   margin: 50px auto;
   position: absolute;
-  text-align: center;
-  left: 0;
+  left: -20px;
   right: 0;
-  top: 42px;
+  top: 14px;
   margin: auto;
-  z-index: 999;
+  z-index: 998;
 }
-.circleProgress_wrapper h1 {
+.show-file .circleProgress_wrapper h1 {
   position: absolute;
   left: 0;
   right: 0;
-  top: 72px;
+  top: 23px;
   margin: auto;
+  font-size: 23px;
+  text-align: center;
 }
-.circleProgress{
-  width: 140px;
-  height: 140px;
+.show-file .circleProgress_wrapper .wrapper .circleProgress{
+  width: 100px;
+  height: 100px;
   border:10px solid transparent;
   border-radius: 50%;
   position: absolute;
   top:0;
 }
-.rightcircle{
+.show-file .circleProgress_wrapper .wrapper .rightcircle{
     border-top:10px solid #84f384;
     border-right:10px solid #84f384;
     right:0;
     transform: rotate(-135deg);
 }
-.leftcircle{
+.show-file .circleProgress_wrapper .wrapper .leftcircle{
     border-bottom:10px solid #84f384;
     border-left:10px solid #84f384;
     left:0;
     transform: rotate(-135deg)
 }
-.wrapper{
-    width: 70.3px;
-    height: 200px;
-    position: absolute;
-    top: 20px;
-    overflow: hidden;
+.show-file .circleProgress_wrapper .wrapper {
+  width: 50.3px;
+  height: 120px;
+  position: absolute;
+  top: -14px;
+  overflow: hidden;
 }
 .right{
     right: 20px;

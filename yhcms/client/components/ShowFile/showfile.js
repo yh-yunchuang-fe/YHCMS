@@ -82,6 +82,12 @@ Template.showfile.events({
   'mouseleave .html-bottom-cantainer'(event, instance) {
     instance.$('.html-mask').fadeOut(200);
   },
+  // 'mouseenter .show-file'(event, instance) {
+  //   instance.$('.img-name').fadeIn(200);
+  // },
+  // 'mouseleave .show-file'(event, instance) {
+  //   instance.$('.img-name').fadeOut(100);
+  // },
 })
 
 Template.showfile.helpers({

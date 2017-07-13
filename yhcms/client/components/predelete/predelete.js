@@ -16,7 +16,6 @@ Template.predelete.events({
     instance.$(event.target).parents('body').find('.prepare-delete').fadeOut(100);
   },
   'click .yhcms-btn-primary'(event, instance) {
-    console.log(getStore());
     closeModal();
     if (getStore().html.length > 0) {
       showSpin();

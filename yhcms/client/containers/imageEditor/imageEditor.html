@@ -1,11 +1,29 @@
 <template name="imageEditor">
-  <div class="title">
-    <span>{{proj.name}}</span>
-  </div>
   <div class="image-editor-page">
+    {{#if view}}
+    <div class="add-hover">
+      <img src="/images/imageCat.png" alt="">
+    </div>
+    {{/if}}
+    <div class="title">
+      <span>{{proj.name}}</span>
+    </div>
     {{#each image in images}}
+      {{#if image.show_time_line}}
+        <div class="time-line">
+          <span>{{image.time}}</span>
+          <img src="/images/arrow-down.png" alt="">
+        </div>
+      {{/if}}
       {{> showfile url=image.src image=image}}
     {{/each}}
-    {{> addFile type="image/png,image/gif,image/jpeg"}}
+    {{> addFile type="image/png,image/gif,image/jpeg" show="none"}}
+  </div>
+  <div class="drop-here">
+    <div class="drop-desc">
+      <span>拖拽至此上传</span>
+      <img src="/images/upload-img.gif" alt="">
+    </div>
+    {{add_drop_event}}
   </div>
 </template>

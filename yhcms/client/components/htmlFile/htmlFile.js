@@ -9,7 +9,7 @@ Template.htmlfile.onCreated(function() {
   this.clicked = new ReactiveVar(false);
   initStore();
   this.currentData = new ReactiveVar(Template.currentData().html);
-  this.isView = new ReactiveVar(Meteor.user().profile.isView);
+  this.flag = new ReactiveVar(true);
 })
 
 Template.htmlfile.events({
@@ -37,7 +37,7 @@ Template.htmlfile.events({
       instance.$(`#${instance.currentData.get().fileId}`).click();
     } else {
       instance.$('.prepare-delete').fadeIn(300)
-      if (instance.isView.get()) {
+      if (Meteor.user() && Meteor.user().profile.isView) {
         const fileId = instance.currentData.get().fileId;
         const collections = getStore();
         if (!collections.html.includes(fileId)) {
@@ -59,7 +59,7 @@ Template.htmlfile.events({
       instance.$('.html-mask').unbind('click').fadeIn(200).click(() => {
         /* Act on the event */
         instance.$('.prepare-delete').fadeIn(300);
-        if (instance.isView.get()) {
+        if (Meteor.user() && Meteor.user().profile.isView) {
           const fileId = instance.currentData.get().fileId;
           const collections = getStore();
           if (!collections.html.includes(fileId)) {
@@ -78,7 +78,7 @@ Template.htmlfile.events({
 
 Template.htmlfile.helpers({
   display: () => {
-    if (Template.instance().isView.get()) {
+    if (Meteor.user() && Meteor.user().profile.isView) {
         return 'block';
     } else {
       return 'none';
@@ -110,6 +110,10 @@ Template.htmlfile.helpers({
     const id = Template.instance().currentData.get()._id;
     const html = DBhtml.findOne({ _id: id });
     if (html) {
+      if (!html.uploading && Template.instance().flag.get()) {
+        Template.instance().currentData.set(html);
+        Template.instance().flag.set(false);
+      }
       return html.uploading;
     }
     return false;

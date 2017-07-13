@@ -51,6 +51,8 @@ function htmlUploaded(file) {
                   msg: 'add ok'
                 });
               } else {
+                const _html = DBhtml.findOne({ filePath: `${projHtmlPath}/${file.name.split('.zip')[0]}` });
+                DBhtml.update({ _id: _html._id }, { $set: { updateAt: Date.now() } });
                 DBhtml.remove({ fileId: file._id });
                 resolve({
                   flag: true,

@@ -21,7 +21,7 @@ const Htmls = new FilesCollection({
   onInitiateUpload: (file) => {
     console.log(file);
     DBhtml.insert({ fileId: file._id, projId: file.meta.projId, percent: 0, uploading: true, ext: file.ext, extension: file.extension, extensionWithDot: file.extensionWithDot,
-      meta: file.meta, mime: file.mime, 'mime-type': file['mime-type'], name: file.name, size: file.size, type: file.type });
+      meta: file.meta, mime: file.mime, 'mime-type': file['mime-type'], name: file.name, size: file.size, type: file.type, updateAt: Date.now() });
   }
 });
 

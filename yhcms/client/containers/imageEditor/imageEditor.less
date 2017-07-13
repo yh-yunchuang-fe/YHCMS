@@ -1,21 +1,86 @@
 .image-editor-page {
-  padding: 15px;
+  padding: 25px;
   display: inline-flex;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  z-index: 777;
+  position: relative;
+  padding-top: 100px;
+  .add-hover {
+    width: 100px;
+    left: 0;
+    right: 0;
+    top: -70px;
+    margin: auto;
+    position: absolute;
+    cursor: pointer;
+    img {
+      width: 100px;
+    }
+    z-index: 888;
+  }
+  .title {
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    position: absolute;
+    text-align: center;
+    z-index: 777;
+    margin-bottom: 10px;
+    span {
+      font-size: 50px;
+    }
+  }
+}
+.image-editor-page .time-line {
+  color: #02b2ff;
+  font-size: 20px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.image-editor-page .time-line img {
+  width: 30px;
+  height: 30px;
 }
 .image-editor-page .add-file {
+  width: 100px;
+  height: 100px;
+}
+.image-editor-page .add-file #filer{
   width: 100px;
   height: 100px;
 }
 .image-editor-page .add-file .yhicon-plus{
   line-height: 140px;
 }
-.title {
-  text-align: center;
+.drop-here {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
 }
-.title span{
-  font-size: 50px;
+.drop-desc {
+  width: 20%;
+  margin: 100px auto;
+  font-size: 24px;
+  font-family: monospace;
+  text-align: center;
+  border: 3px dashed orange;
+  display: none;
+}
+.drop-desc img {
+  width: 70px;
+  height: 70px;
+  margin-top: -20px;
+}
+.drop-desc span {
+  line-height: 70px;
+  color: white;
+}
+.border-ora {
+  border: 3px dashed orange;
+  background: rgba(0, 0, 0, 0.53);
 }

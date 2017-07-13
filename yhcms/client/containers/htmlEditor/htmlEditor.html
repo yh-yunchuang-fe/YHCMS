@@ -1,13 +1,25 @@
 <template name="htmlEditor">
-  <div class="title">
-    <span>{{proj.name}}</span>
-  </div>
   <div class="html-editor-page">
+    {{#if view}}
+    <div class="add-hover">
+      <img src="/images/zip.png" alt="">
+    </div>
+    {{/if}}
+    <div class="title">
+      <span>{{proj.name}}</span>
+    </div>
     <ul class="contentBox">
       {{#each html in Htmls}}
         {{> htmlfile html=html}}
       {{/each}}
-      {{> addFile type=".zip" height="81px" marginTop="0px"}}
+      {{> addFile type=".zip" height="81px" marginTop="0px" show="none"}}
     </ul>
+  </div>
+  <div class="drop-here">
+    <div class="drop-desc">
+      <span>拖拽至此上传</span>
+      <img src="/images/upload-img.gif" alt="">
+    </div>
+    {{add_drop_event}}
   </div>
 </template>

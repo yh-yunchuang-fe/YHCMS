@@ -29,5 +29,11 @@ Template.header.helpers({
     } else {
       return false;
     }
+  },
+  view: () => {
+    if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.isView) {
+      return true;
+    }
+    return false;
   }
 })

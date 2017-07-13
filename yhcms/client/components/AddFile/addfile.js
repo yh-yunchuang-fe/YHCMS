@@ -9,6 +9,8 @@ Template.addFile.onCreated(function() {
     this.MQ_TRICK = new ReactiveVar(1);
     this.READY_SIGNAL = new ReactiveVar('');
     this.MQ_READY_ARRAY = new ReactiveVar([]);
+    window.addfile = document.createEvent('Event');
+    window.addfile.initEvent('addfile', true, true);
 })
 
 Template.addFile.helpers({
@@ -39,6 +41,23 @@ Template.addFile.events({
             startPoll(instance, project);
             MQ_TRICK(instance, project, _MQ[0]);
         }
+    },
+    'addfile #filer'(event, instance) {
+      const originalFiles = event.originalEvent.data;
+      const files = [];
+      const len = originalFiles.length;
+      for (let i = 0; i < len; i++) {
+        files.push(originalFiles[i]);
+      }
+      const _MQ = [];
+      while(files.length > 0) {
+        _MQ.push(files.splice(0, 10));
+      }
+      console.log(_MQ);
+      instance.MQ.set(_MQ);
+      const project = Projects.findOne({ _id: FlowRouter.getParam('projectid') });
+      startPoll(instance, project);
+      MQ_TRICK(instance, project, _MQ[0]);
     }
 })
 

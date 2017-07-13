@@ -21,7 +21,7 @@ function imageUploaded(file) {
           } else {
             Meteor.setTimeout(
               () => {
-                DBimage.update({ name: file.name, projId: file.meta.projId, uploading: false }, { $set: { src: `${secret.BASE_URL}${res.key}` } });
+                DBimage.update({ name: file.name, projId: file.meta.projId, uploading: false }, { $set: { src: `${secret.BASE_URL}${res.key}`, updateAt: Date.now() } });
                 DBimage.remove({ fileId: file._id });
                 resolve({
                   flag: true,
