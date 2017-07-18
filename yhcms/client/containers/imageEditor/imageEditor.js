@@ -25,6 +25,9 @@ Template.imageEditor.events({
   },
   'dragover .drop-here'(e, instance) {
     e.preventDefault();
+  },
+  'dragenter .drop-here'(e, instance) {
+    e.preventDefault();
     instance.$('.drop-here').css('z-index', 999).addClass('border-ora');
     instance.$('.drop-desc').fadeIn(200);
   },
@@ -79,7 +82,6 @@ Template.imageEditor.helpers({
       const _imgs = [];
       const months = [];
       imgs.map((img) => {
-        img.src = `${img.src}?v=${Template.instance().date.get()}`;
         if (img.updateAt) {
           const d = new Date(img.updateAt);
           img.time = `${d.getFullYear()}年 ${d.getMonth() + 1}月`

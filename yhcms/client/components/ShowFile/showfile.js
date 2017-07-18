@@ -58,6 +58,7 @@ Template.showfile.events({
     }
   },
   'mouseenter .bar-img'(event, instance) {
+    instance.$('.html-bottom-cantainer').css('z-index', 999);
     if (instance.$(event.currentTarget).attr('index') == 1) {
       instance.$('.html-mask').unbind('click').fadeIn(200).click(() => {
         /* Act on the event */
@@ -81,6 +82,10 @@ Template.showfile.events({
   },
   'mouseleave .html-bottom-cantainer'(event, instance) {
     instance.$('.html-mask').fadeOut(200);
+    setTimeout(() => {
+      instance.$('.html-bottom-cantainer').css('z-index', 888);
+    }, 200);
+
   },
   // 'mouseenter .show-file'(event, instance) {
   //   instance.$('.img-name').fadeIn(200);

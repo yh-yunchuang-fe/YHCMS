@@ -74,6 +74,7 @@ Template.svgEditor.helpers({
       let cssUrl = [];
       const project = Projects.findOne({ _id: _id });
       if (project && project.cssUrl) {
+        project.cssUrl.reverse();
         project.cssUrl.map((key) => {
           key.createAt = new Date(key.createAt).toLocaleString();
         });

@@ -6,3 +6,4 @@ export { default as imageUploaded } from './imageUploaded';
 export { default as htmlUploaded } from './htmlUploaded';
 export { default as deleteProj } from './deleteProj';
 export { default as downloadSVG } from './downloadSVG';
+export { default as downloadAssets } from './downloadAssets';

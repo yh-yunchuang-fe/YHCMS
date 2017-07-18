@@ -37,7 +37,7 @@ Template.addProject.events({
     closeModal();
   },
   'click .add-rela'(event, instance) {
-    instance.$(event.currentTarget).parents('body').find('.hover-model').animate({ top: '60%' })
+    instance.$(event.currentTarget).parents('body').find('.hover-model').show().animate({ top: '60%' })
     instance.$(event.currentTarget).parents('body').find('#rela_value').val('');
   }
 });

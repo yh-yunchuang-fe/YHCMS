@@ -19,6 +19,9 @@ Template.Modal.events({
   'click #left-btn'(event, instance) {
     instance.$('.hover-model').animate({ top: '40%' });
     instance.$('#rela_value').val('');
+    setTimeout(() => {
+      instance.$('.hover-model').hide();
+    }, 1000);
   },
   'click #right-btn'(event, instance) {
     const value = instance.$('#rela_value').val();
@@ -30,6 +33,9 @@ Template.Modal.events({
         userId: Meteor.userId()
       });
       instance.$('.hover-model').animate({ top: '40%' });
+      setTimeout(() => {
+        instance.$('.hover-model').hide();
+      }, 1000);
     } else {
       alert('归属类型已存在');
     }

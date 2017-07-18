@@ -1,9 +1,5 @@
 <template name="showfile">
   <div class="show-file">
-    <div class="img-name">
-      <img src="/images/bubble.png" alt="">
-      <span>{{image.name}}</span>
-    </div>
     {{#if showprogress}}
 		<div class="circleProgress_wrapper">
         <div class="wrapper right">
@@ -24,6 +20,9 @@
 		</a>
 		<div class="html-top-cantainer" style="background-image: url('{{url}}')">
 		</div>
+    <div class="image-name">
+      <span title="{{image.name}}">{{image.name}}</span>
+    </div>
 		<div class="html-bottom-cantainer">
 			<div class="html-mask">
 				<span>查看</span>
