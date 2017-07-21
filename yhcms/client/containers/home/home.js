@@ -9,8 +9,14 @@ import { getStore } from '../../stores/uiactions/willdelete.action';
 Template.home.onCreated(function(){
   setStore('');
   const findType = window.localStorage.getItem('findType');
-  this.rela = new ReactiveVar('');
+  let chooseProj = window.localStorage.getItem('chooseProj');
   this.dir = new ReactiveVar(true);
+  if (chooseProj) {
+    chooseProj = JSON.parse(chooseProj);
+    this.rela = new ReactiveVar(chooseProj.projName);
+  } else {
+    this.rela = new ReactiveVar('');
+  }
   if (findType) {
     this.findType = new ReactiveVar(findType);
   } else {
@@ -26,7 +32,8 @@ const types = ['image', 'svg', 'html'];
 Template.home.rendered = function() {
   this.autorun(() => {
     const findType = window.localStorage.getItem('findType');
-    Template.instance().dir.set(findType === 'html');
+    const chooseProj = window.localStorage.getItem('chooseProj');
+    Template.instance().dir.set(findType === 'html' && !chooseProj);
     let left = Template.instance().$(`.tab-${findType ? findType : 'html'} span`).offset().left;;
     Template.instance().$('.under-line').css('left', left - 20);
     Template.instance().$(`.tab-${findType ? findType : 'html'} span`).addClass('orange');
@@ -53,9 +60,19 @@ Template.home.events({
     const width = document.body.clientWidth;
     const type = instance.$(event.currentTarget).attr('index');
     instance.findType.set(type);
-    instance.dir.set(type === 'html');
     if (type !== 'html') {
       instance.rela.set('');
+      instance.dir.set(false);
+    } else {
+      let chooseProj = window.localStorage.getItem('chooseProj');
+      if (chooseProj) {
+        chooseProj = JSON.parse(chooseProj);
+        instance.rela.set(chooseProj.projName);
+        instance.dir.set(false);
+      } else {
+        instance.rela.set('');
+        instance.dir.set(true);
+      }
     }
     window.localStorage.setItem('findType', type);
     const left = instance.$(`.tab-${type} span`).offset().left - 20;
@@ -71,16 +88,19 @@ Template.home.events({
   },
   'click .add-hover'(event, instance) {
     instance.$('.project-btn').click();
-    console.log(1);
   },
   'dblclick .html-dir'(event, instance) {
     const rela = instance.$(event.currentTarget).find('span').text();
     instance.dir.set(false);
     instance.rela.set(rela);
+    window.localStorage.setItem('chooseProj', JSON.stringify({
+      projName: rela
+    }));
   },
   'click .goBack'(event, instance) {
     instance.dir.set(true);
     instance.rela.set('');
+    window.localStorage.removeItem('chooseProj');
   },
   'search .home-container'(event, instance) {
     if (instance.findType.get() === 'html') {
@@ -117,7 +137,7 @@ Template.home.helpers({
     if (type === 'html' && rela === '' && dir) {
       return [];
     }
-    if (rela !== '') {
+    if (rela !== '' && type === 'html') {
       searchObj.rela = rela;
     }
     if (getSearchStore() !== '') {

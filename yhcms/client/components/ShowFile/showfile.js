@@ -9,7 +9,6 @@ Template.showfile.onCreated(function() {
   this.clicked = new ReactiveVar(false);
   initStore();
   this.currentData = new ReactiveVar(Template.currentData().image);
-  this.isView = new ReactiveVar(Meteor.user().profile.isView);
 })
 
 Template.showfile.events({
@@ -46,7 +45,7 @@ Template.showfile.events({
       window.open(`${instance.currentData.get().src.split('?v=')[0]}?v=${Date.now()}`)
     } else {
       instance.$('.prepare-delete').fadeIn(300)
-      if (instance.isView.get()) {
+      if (Meteor.user() && Meteor.user().profile.isView) {
         const fileId = instance.currentData.get().fileId;
         const collections = getStore();
         if (!collections.image.includes(fileId)) {
@@ -68,7 +67,7 @@ Template.showfile.events({
       instance.$('.html-mask').unbind('click').fadeIn(200).click(() => {
         /* Act on the event */
         instance.$('.prepare-delete').fadeIn(300);
-        if (instance.isView.get()) {
+        if (Meteor.user() && Meteor.user().profile.isView) {
           const fileId = instance.currentData.get().fileId;
           const collections = getStore();
           if (!collections.html.includes(fileId)) {
@@ -97,7 +96,7 @@ Template.showfile.events({
 
 Template.showfile.helpers({
   display: () => {
-    if (Template.instance().isView.get()) {
+    if (Meteor.user() && Meteor.user().profile.isView) {
         return 'block';
     } else {
       return 'none';
