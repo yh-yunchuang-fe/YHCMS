@@ -15,10 +15,10 @@ Template.htmlfile.onCreated(function() {
 Template.htmlfile.events({
   'click .look_btn'(event, instance) {
     event.stopPropagation();
-    instance.$('a').attr('href', instance.currentData.get().openUrl);
+    instance.$('a').attr('href', instance.currentData.get().openUrl.replace(/\s+/g, ''));
   },
   'click .html-top-cantainer'(event, instance) {
-    instance.$('a').attr('href', instance.currentData.get().openUrl);
+    instance.$('a').attr('href', instance.currentData.get().openUrl.replace(/\s+/g, ''));
     instance.$(`#${instance.currentData.get().fileId}`).click();
   },
   'click .prepare-delete'(event, instance) {
