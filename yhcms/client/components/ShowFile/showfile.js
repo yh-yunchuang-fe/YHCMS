@@ -42,7 +42,7 @@ Template.showfile.events({
   'click .bar-img'(event, instance) {
     event.stopPropagation();
     if (instance.$(event.currentTarget).attr('index') == 1) {
-      window.open(`${instance.currentData.get().src.split('?v=')[0]}?v=${Date.now()}`)
+      instance.$(event.currentTarget).parents('.image-editor-page').find('#downloadImageFrame').attr('src', `${instance.currentData.get().src.split('?v=')[0]}?attname=${encodeURI(instance.currentData.get().name)}`);
     } else {
       instance.$('.prepare-delete').fadeIn(300)
       if (Meteor.user() && Meteor.user().profile.isView) {
@@ -61,8 +61,8 @@ Template.showfile.events({
     if (instance.$(event.currentTarget).attr('index') == 1) {
       instance.$('.html-mask').unbind('click').fadeIn(200).click(() => {
         /* Act on the event */
-        window.open(`${instance.currentData.get().src.split('?v=')[0]}?v=${Date.now()}`)
-      }).find('span').text('查看');
+        instance.$(event.currentTarget).parents('.image-editor-page').find('#downloadImageFrame').attr('src', `${instance.currentData.get().src.split('?v=')[0]}?attname=${encodeURI(instance.currentData.get().name)}`);
+      }).find('span').text('下载');
     } else {
       instance.$('.html-mask').unbind('click').fadeIn(200).click(() => {
         /* Act on the event */
