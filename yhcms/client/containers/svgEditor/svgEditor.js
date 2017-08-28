@@ -3,6 +3,7 @@ import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
 import { getStore } from '../../stores/uiactions/willdelete.action';
 import { DBsvg, Projects } from '../../../universal/collections';
 import { ReactiveVar } from "meteor/reactive-var";
+import { domain } from '../../../config.json';
 
 Template.svgEditor.onCreated(function() {
   this.createStatus = new ReactiveVar({
@@ -51,6 +52,25 @@ Template.svgEditor.events({
       return;
     }
     $('#downloadSVGFrame').attr('src', `/downloadSVG?fileIds=${getStore().svg.join(',')}`);
+  },
+  'click #viewAPP'(event, instance) {
+    const project = Projects.findOne({ _id: FlowRouter.getParam('projectid') });
+    window.open(`http://${domain}/svg/${project.name.replace(/\s+/g, '')}/ttfs/app_icon/app.html`);
+  },
+  'click #downloadTTF'(event, instance) {
+    const project = Projects.findOne({ _id: FlowRouter.getParam('projectid') });
+    $('#downloadTTFFrame').attr('src', `/downloadTTF?projName=${project.name}`);
+    let alert_ready = true;
+    instance.$(event.currentTarget).parents('#main').find("#downloadTTFFrame").load(function() {
+      let json = $(this).contents().find("*").first().text();
+      json = JSON.parse(json);
+      if (json.code) {
+        if (alert_ready) {
+          alert(json.error);
+          alert_ready = false;
+        }
+      }
+    });
   }
 })
 

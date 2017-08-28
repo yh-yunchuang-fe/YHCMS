@@ -15,13 +15,15 @@
       </div>
     </div>
   {{else}}
-    {{#if view}}
     <div class="btn-group" style="margin-left:25px;" role="group" aria-label="...">
-      <button type="button" class="btn btn-warning" style="border-radius: 8px;" id="cssCreate">生成CSS</button>
-      <button type="button" class="btn btn-danger" style="margin-left:25px;border-radius: 8px;" id="delete">删除</button>
+      {{#if view}}
+        <button type="button" class="btn btn-warning" style="border-radius: 8px;" id="cssCreate">生成CSS</button>
+        <button type="button" class="btn btn-danger" style="margin-left:25px;border-radius: 8px;" id="delete">删除</button>
+      {{/if}}
       <button type="button" class="btn btn-success" style="margin-left:25px;border-radius: 8px;" id="downloadSVG">下载svg</button>
+      <button type="button" class="btn btn-success" style="margin-left:25px;border-radius: 8px;background-color: #1073ec;border-color: #1073ec;" id="downloadTTF">下载TTF</button>
+      <button type="button" class="btn btn-success" style="margin-left:25px;border-radius: 8px;background-color: #ec7610;border-color: #ec7610;" id="viewAPP">预览APP icon</button>
     </div>
-    {{/if}}
   {{/if}}
   {{#each cssUrl in cssUrls}}
     <div class="url_address">
@@ -32,4 +34,5 @@
     </div>
   {{/each}}
   <iframe style="display:none;" id="downloadSVGFrame"></iframe>
+  <iframe style="display:none;" id="downloadTTFFrame"></iframe>
 </template>
