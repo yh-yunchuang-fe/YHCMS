@@ -8,11 +8,15 @@ function route(FlowRouter) {
     name:'home',
     action: renderBasic.bind(this,'home')
   })
+  FlowRouter.route('/minipage',{
+    name:'minipage',
+    action: renderBasic.bind(this,'miniEditor')
+  })
   FlowRouter.route('/image/:projectid',{
     name:'imageeditor',
     action: renderBasic.bind(this,'imageEditor')
   })
-  FlowRouter.route('/svg/:projectid',{
+  FlowRouter.route('/svgpage/:projectid',{
     name:'svgeditor',
     action: renderBasic.bind(this,'svgEditor')
   })

@@ -1,0 +1,39 @@
+<template name="miniEditor">
+  <div class="mini-editore-page">
+    <div class="header">
+      <div class="header-input">
+        <input type="text" placeholder="请输入关联的项目id" id="projId" value="LPAwe8HETN4j7SGXv"/>
+      </div>
+      <div class="citys">
+        <select id="city">
+          {{#each city in citys}}
+            <option value="{{city.id}}">{{city.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    {{#each area in mini}}
+      <div class="store-item">
+        <div class="store-line">
+          {{area.name}}
+        </div>
+        <div class="stores-wraper">
+          {{#each store in area.stores}}
+            <div class="store">
+              {{#if store.miniCodeUrl}}
+                <div class="mini-image" data-storeId="{{store.id}}" style="background-image: url({{store.miniCodeUrl}})"></div>
+              {{else}}
+                <div class="mini-image" id="createMiniCode" data-storeName="{{store.name}}" data-storeId="{{store.id}}" data-sellerId="{{store.seller.id}}" style="background-image: url(https://static.yonghuivip.com/54bab4b458f903350cac1e5b696067d4-dd0567a976108bf0c745152e87fb6e77.png?v=1504167585210)"></div>
+              {{/if}}
+              <div class="store-info">
+                <span>城市名称--{{store.cityname}}</span>
+                <span>门店名称--{{store.name}}</span>
+                <span>门店地址--{{store.address}}</span>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</template>

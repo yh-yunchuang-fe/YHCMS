@@ -8,3 +8,4 @@ export { default as deleteProj } from './deleteProj';
 export { default as downloadSVG } from './downloadSVG';
 export { default as downloadTTF } from './downloadTTF';
 export { default as downloadAssets } from './downloadAssets';
+export { default as createMiniCode } from './createMiniCode';

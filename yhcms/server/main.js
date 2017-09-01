@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { WebApp } from 'meteor/webapp';
 import path from 'path';
 import fs from 'fs';
-import { deleteSvg, deleteImage, deleteHtml, svgUploaded, imageUploaded, htmlUploaded, deleteProj, downloadSVG, downloadAssets, downloadTTF } from './service';
+import { deleteSvg, deleteImage, deleteHtml, svgUploaded, imageUploaded, htmlUploaded, deleteProj, downloadSVG, downloadAssets, downloadTTF, createMiniCode } from './service';
 import { createCss } from './service/plugin'
 import { checking } from './security';
 import config from '../config.json';
@@ -88,6 +88,7 @@ WebApp.connectHandlers.use('/downloadSVG', (req, res) => {
     res.end({
       error: 'fileIds is require'
     })
+    return;
   }
   downloadSVG(req, res);
 });
@@ -98,6 +99,7 @@ WebApp.connectHandlers.use('/downloadTTF', (req, res) => {
     res.end({
       error: 'projName is require'
     })
+    return;
   }
   downloadTTF(req, res);
 });
@@ -108,6 +110,20 @@ WebApp.connectHandlers.use('/downloadAssets', (req, res) => {
     res.end({
       error: 'id is require'
     })
+    return;
   }
   downloadAssets(req, res);
+});
+
+WebApp.connectHandlers.use('/createMiniCode', (req, res) => {
+  console.log(req.query);
+  if (!req.query.storeId) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify({
+      code: '1000',
+      error: 'storeId is require'
+    }))
+    return;
+  }
+  createMiniCode(req.query, res);
 });

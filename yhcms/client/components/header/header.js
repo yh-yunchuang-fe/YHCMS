@@ -22,6 +22,11 @@ Template.header.events({
       setStore(instance.searchValue.get());
     }
   },
+  'click, .createMini' (event, instance) {
+    if (Meteor.user() && Meteor.user().profile && Meteor.user().profile && Meteor.user().profile.manager) {
+      FlowRouter.go('minipage');
+    }
+  }
 });
 
 Template.header.helpers({
@@ -38,5 +43,12 @@ Template.header.helpers({
       return true;
     }
     return false;
+  },
+  profile_manager: () => {
+    if (Meteor.user() && Meteor.user().profile && Meteor.user().profile && Meteor.user().profile.manager) {
+      return Meteor.user().profile.manager;
+    } else {
+      return false;
+    }
   }
 })

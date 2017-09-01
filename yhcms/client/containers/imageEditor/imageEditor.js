@@ -1,11 +1,29 @@
 import { Template } from 'meteor/templating';
-import { DBimage, Projects } from '../../../universal/collections';
+import { DBimage, Projects, MiniCode } from '../../../universal/collections';
 import { ReactiveVar } from "meteor/reactive-var";
+import { getCitys, setCitys } from '../../stores/uiactions/storeCitys.action';
 import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
 import { getStore } from '../../stores/uiactions/willdelete.action';
+import Http from '../../Http';
+
+const filter = ['LPAwe8HETN4j7SGXv', 'rMjpdavyc2SJjBwMg'];
 
 Template.imageEditor.onCreated(function() {
   this.date = new ReactiveVar(Date.now());
+  this.search = new ReactiveVar({
+    city: '1',
+    store: '2',
+    shop: ''
+  });
+  Http.get({
+    url: 'https://activity.yonghuivip.com/api/app/shop/citys'
+  })
+  .then(response => {
+    if (response.code === 0 && response.data) {
+      const citys = response.data.citys;
+      setCitys(citys);
+    }
+  })
 })
 
 Template.imageEditor.events({
@@ -60,6 +78,24 @@ Template.imageEditor.events({
   },
   'click .add-hover'(event, instance) {
     instance.$('#filer').click();
+  },
+  'input #shop'(event, instance) {
+    const value = event.currentTarget.value;
+    const miniSearch = instance.search.get();
+    miniSearch.shop = value;
+    instance.search.set(miniSearch)
+  },
+  'change #city'(event, instance) {
+    const value = event.currentTarget.value;
+    const miniSearch = instance.search.get();
+    miniSearch.city = value;
+    instance.search.set(miniSearch)
+  },
+  'change #store'(event, instance) {
+    const value = event.currentTarget.value;
+    const miniSearch = instance.search.get();
+    miniSearch.store = value;
+    instance.search.set(miniSearch)
   }
 })
 
@@ -78,7 +114,25 @@ Template.imageEditor.helpers({
       if (!Meteor.userId()) {
         return FlowRouter.go('/');
       }
-      const imgs = DBimage.find({ projId: FlowRouter.getParam('projectid') }, { sort: { updateAt: -1 } });
+      const search = Template.instance().search.get();
+      const options = {
+        projId: FlowRouter.getParam('projectid')
+      }
+      if (filter.includes(options.projId)) {
+        if (search.city && search.city !== '') {
+          options.cityId = search.city;
+        }
+        if (search.shop && search.shop !== '') {
+          options.name = new RegExp(search.shop);
+        }
+        if (search.store && search.store !== '') {
+          const sellerId = search.store.split(',');
+          options.sellerId = {
+            $in: sellerId
+          }
+        }
+      }
+      const imgs = DBimage.find(options, { sort: { updateAt: -1 } });
       const _imgs = [];
       const months = [];
       imgs.map((img) => {
@@ -114,5 +168,18 @@ Template.imageEditor.helpers({
       } else {
         return false;
       }
+    },
+    profile_seller: () => {
+      if (Meteor.user() && Meteor.user().profile && Meteor.user().profile.seller) {
+        return Meteor.user().profile.seller;
+      } else {
+        return false;
+      }
+    },
+    miniCodeUrl: () => {
+      return MiniCode.find({});
+    },
+    citys: () => {
+      return getCitys();
     }
 })

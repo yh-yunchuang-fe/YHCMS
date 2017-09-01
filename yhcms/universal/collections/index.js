@@ -6,6 +6,7 @@ import DBsvg from './DBsvg';
 import DBimage from './DBimage';
 import DBhtml from './DBhtml';
 import ProjRele from './projRele';
+import MiniCode from './miniCode';
 export {
   Projects,
   Images,
@@ -14,5 +15,6 @@ export {
   DBsvg,
   DBimage,
   DBhtml,
-  ProjRele
+  ProjRele,
+  MiniCode
 }

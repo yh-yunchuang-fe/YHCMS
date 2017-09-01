@@ -8,6 +8,38 @@
     <div class="title">
       <span>{{proj.name}}</span>
     </div>
+    {{#if profile_seller}}
+      <div class="search-bar-wrapper">
+        <div class="serach-bar">
+          <div class="store-name">城市</div>
+          <div class="store-input" style="border: none;">
+            <select id="city">
+              {{#each city in citys}}
+                <option value="{{city.id}}">{{city.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+        </div>
+        <div class="serach-bar">
+          <div class="store-name">商家</div>
+          <div class="store-input" style="border: none;">
+            <select id="store">
+              <option value="2">永辉生活</option>
+              <option value="6">超级物种</option>
+              <option value="3,7,9">bravo</option>
+              <option value="5">bravo精标</option>
+              <option value="11">急速达</option>
+            </select>
+          </div>
+        </div>
+        <div class="serach-bar">
+          <div class="store-name">门店名称</div>
+          <div class="store-input">
+            <input type="text" placeholder="请输入门店名称" id="shop"/>
+          </div>
+        </div>
+      </div>
+    {{/if}}
     {{#each image in images}}
       {{#if image.show_time_line}}
         <div class="time-line">

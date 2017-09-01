@@ -20,6 +20,7 @@ function getFile(key, cb) {
       deleteFile(key, cb);
     } else {
       console.log(err);
+      console.log(`七牛上不存在该key == ${key}，上传新文件`);
       if (err.code === 612) {
         cb();
       }
