@@ -63,7 +63,8 @@ Template.miniEditor.events({
   },
   'change #city' (event, instance) {
     const params = {
-      cityid: event.currentTarget.value
+      cityid: event.currentTarget.value,
+      isonlyscancode: 1
     };
     Http.get({
       url: 'https://activity.yonghuivip.com/api/app/shop/storelist',

@@ -93,13 +93,6 @@ div	/Users/burning/Personal/YHCMS/yhcms/client/containers/miniEditor/miniEditor.
 span	/Users/burning/Personal/YHCMS/yhcms/client/containers/miniEditor/miniEditor.html	/^                <span>城市名称--{{store.cityname}}<\/span>$/;"	function	line:29
 span	/Users/burning/Personal/YHCMS/yhcms/client/containers/miniEditor/miniEditor.html	/^                <span>门店名称--{{store.name}}<\/span>$/;"	function	line:30
 span	/Users/burning/Personal/YHCMS/yhcms/client/containers/miniEditor/miniEditor.html	/^                <span>门店地址--{{store.address}}<\/span>$/;"	function	line:31
-createMiniCode	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^function createMiniCode(params, _res) {$/;"	function	line:12
-const.shopId	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^  const sendData = {$/;"	property	line:15
-createMiniCode	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^function createMiniCode(params, _res) {$/;"	function	line:12
-getCodeUrl	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^function getCodeUrl(params, _res) {$/;"	function	line:48
-const.path	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^  const jsonBody = {$/;"	property	line:52
-getCodeUrl	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^function getCodeUrl(params, _res) {$/;"	function	line:48
-upload2qiniu	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^      upload2qiniu(file, Meteor.bindEnvironment(function(ret) {$/;"	function	line:70
 uptoken	/Users/burning/Personal/YHCMS/yhcms/server/utils/upload2qiniu.js	/^function uptoken(bucket, key) {$/;"	function	line:9
 uptoken	/Users/burning/Personal/YHCMS/yhcms/server/utils/upload2qiniu.js	/^function uptoken(bucket, key) {$/;"	function	line:9
 getFile	/Users/burning/Personal/YHCMS/yhcms/server/utils/upload2qiniu.js	/^function getFile(key, cb) {$/;"	function	line:16
@@ -114,3 +107,12 @@ refesh	/Users/burning/Personal/YHCMS/yhcms/server/utils/upload2qiniu.js	/^functi
 const.urls	/Users/burning/Personal/YHCMS/yhcms/server/utils/upload2qiniu.js	/^  const jsonBody = {$/;"	property	line:63
 refesh	/Users/burning/Personal/YHCMS/yhcms/server/utils/upload2qiniu.js	/^function refesh(url) {$/;"	function	line:62
 copy	/Users/burning/Personal/YHCMS/yhcms/client/containers/imageEditor/imageEditor.js	/^function copy(obj) {$/;"	function	line:102
+createMiniCode	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^function createMiniCode(params, _res) {$/;"	function	line:12
+const.shopId	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^  const sendData = {$/;"	property	line:15
+createMiniCode	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^function createMiniCode(params, _res) {$/;"	function	line:12
+getCodeUrl	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^function getCodeUrl(params, _res) {$/;"	function	line:48
+const.path	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^  const jsonBody = {$/;"	property	line:52
+getCodeUrl	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^function getCodeUrl(params, _res) {$/;"	function	line:48
+upload2qiniu	/Users/burning/Personal/YHCMS/yhcms/server/service/createMiniCode.js	/^      upload2qiniu(file, Meteor.bindEnvironment(function(ret) {$/;"	function	line:70
+const.cityid	/Users/burning/Personal/YHCMS/yhcms/fetch.js	/^const params = {$/;"	property	line:3
+const.isonlyscancode	/Users/burning/Personal/YHCMS/yhcms/fetch.js	/^  cityid: 1,$/;"	property	line:4

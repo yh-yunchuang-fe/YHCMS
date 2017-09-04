@@ -99,7 +99,7 @@ function getCodeUrl(params, _res) {
             src : `${BASE_URL}${ret.key}`,
             updateAt : Date.now()
           });
-          exec(`mv -rf ${tmpImage_path}`);
+          exec(`rm -rf ${tmpImage_path}`);
         }
         _res.setHeader('Content-Type', 'application/json');
         _res.end(JSON.stringify({
