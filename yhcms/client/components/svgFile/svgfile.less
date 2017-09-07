@@ -1,12 +1,26 @@
 .svgfile {
   background-color: rgba(222, 39, 39, 0.45);
-  width: 100px;
+  width: 140px;
   height: 100px;
   margin-left: 15px;
   text-align: center;
   margin-top: 20px;
   position: relative;
   margin-bottom: 27px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  cursor: pointer;
+  .drop-left{
+    width: 20px;
+    height: 100px;
+    background: white;
+  }
+  .drop-right{
+    width: 20px;
+    height: 100px;
+    background: white;
+  }
 }
 .svgfile svg{
   width: 100px;
@@ -29,7 +43,7 @@
   background-color: rgba(0, 0, 0, .60);
   opacity: 1;
   z-index: 1;
-  left: 0;
+  left: 20px;
   top: 0px;
 }
 .mask span{

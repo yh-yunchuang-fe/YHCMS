@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Projects } from '../../../universal/collections';
+import { Projects, DBsvg } from '../../../universal/collections';
 import { upload2qiniu } from '../../utils/upload2qiniu';
 import svg2css from 'svg2css';
 import path from 'path';
@@ -10,11 +10,16 @@ const projPath = path.join(config.uplaodPath, 'uploads');
 
 function createCss(proj) {
     return new Promise(function(resolve, reject) {
+        const sortName = [];
+        DBsvg.find({ projId: proj._id }, { sort: { index: 1 } }).map((key) => {
+          sortName.push(key.name);
+        });
         svg2css({
             baseDir: projPath,
             cssFilePath: config.cssFilePath,
             svgDir: `svg/${proj.name.replace(/\s+/g, '')}`,
-            iconName: 'yhicon'
+            iconName: 'yhicon',
+            sortName
         }, Meteor.bindEnvironment((res) => {
             if (res.result === true) {
                 const uploadFile = {

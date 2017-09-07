@@ -38,7 +38,8 @@ function svgUploaded(file) {
         }, 1000);
         if (fileCount === 0) {
           Meteor.setTimeout(() => {
-            DBsvg.update({ fileId: file._id }, { $set: { uploading: false, src: src, filePath: `${projSvgPath}/${file.name}` } });
+            const index = DBsvg.find({ projId: file.meta.projId }).count();
+            DBsvg.update({ fileId: file._id }, { $set: { uploading: false, src: src, filePath: `${projSvgPath}/${file.name}`, index: index - 1 } }, { upsert: true });
             resolve({
               flag: true,
               msg: 'add ok'

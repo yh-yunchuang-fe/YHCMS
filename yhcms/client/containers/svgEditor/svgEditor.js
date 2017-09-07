@@ -79,7 +79,7 @@ Template.svgEditor.helpers({
       if (!Meteor.userId()) {
         return FlowRouter.go('/');
       }
-      return DBsvg.find({ projId: FlowRouter.getParam('projectid') });
+      return DBsvg.find({ projId: FlowRouter.getParam('projectid') }, { sort: { index: 1 } });
     },
     createStatus: () => {
       return Template.instance().createStatus.get();
