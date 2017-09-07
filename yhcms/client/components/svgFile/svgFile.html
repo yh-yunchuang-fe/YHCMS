@@ -1,5 +1,5 @@
 <template name="svgfile">
-  <div class="svgfile" draggable="true" id="{{svg._id}}" data-index="{{svg.index}}">
+  <div class="svgfile" draggable="{{view}}" id="{{svg._id}}" data-index="{{svg.index}}">
     <div class="drop-left"></div>
     {{{src}}}
     {{#if svg.uploading}}

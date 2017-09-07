@@ -4,7 +4,7 @@
   </div>
   <div class="svg-editor-page">
     {{#each svg in Svgs}}
-      {{> svgfile src=svg.src svg=svg}}
+      {{> svgfile src=svg.src svg=svg view=view}}
     {{/each}}
     {{> addFile type=".svg"}}
   </div>
