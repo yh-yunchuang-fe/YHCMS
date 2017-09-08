@@ -22,8 +22,9 @@ const Svgs = new FilesCollection({
     }
   },
   onInitiateUpload: (file) => {
+    const index = DBsvg.find({}).count();
     DBsvg.insert({ fileId: file._id, projId: file.meta.projId, percent: 60, uploading: true, ext: file.ext, extension: file.extension, extensionWithDot: file.extensionWithDot,
-      meta: file.meta, mime: file.mime, 'mime-type': file['mime-type'], name: file.name, size: file.size, type: file.type, filePath: file.path });
+      meta: file.meta, mime: file.mime, 'mime-type': file['mime-type'], name: file.name, size: file.size, type: file.type, filePath: file.path, index });
   }
 });
 

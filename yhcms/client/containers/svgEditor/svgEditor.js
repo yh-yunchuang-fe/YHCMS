@@ -4,6 +4,7 @@ import { getStore } from '../../stores/uiactions/willdelete.action';
 import { DBsvg, Projects } from '../../../universal/collections';
 import { ReactiveVar } from "meteor/reactive-var";
 import { domain } from '../../../config.json';
+import { getDragEle } from '../../stores/uiactions/dragStore.action';
 
 Template.svgEditor.onCreated(function() {
   this.createStatus = new ReactiveVar({
@@ -71,8 +72,48 @@ Template.svgEditor.events({
         }
       }
     });
+  },
+  'dragover .drop-here'(e, instance) {
+    if (checkIfReadyEle()) return;
+    e.preventDefault();
+  },
+  'dragenter .drop-here'(e, instance) {
+    if (checkIfReadyEle()) return;
+    e.preventDefault();
+    instance.$('.drop-here').css('z-index', 999).addClass('border-ora');
+    instance.$('.drop-desc').fadeIn(200);
+  },
+  'drop .drop-here'(event, instance) {
+    if (checkIfReadyEle()) return;
+    event.preventDefault();
+    const files = event.originalEvent.dataTransfer.files;
+    const ele = document.getElementById('filer');
+    window.addfile.data = files;
+    ele.dispatchEvent(window.addfile);
+    instance.$('.drop-here').css('z-index', 1).removeClass('border-ora');
+    instance.$('.drop-desc').hide();
+  },
+  'dragenter .svg-editor-page'(event, instance) {
+    if (checkIfReadyEle()) return;
+    event.preventDefault();
+    instance.$('.drop-here').css('z-index', 999).addClass('border-ora');
+    instance.$('.drop-desc').fadeIn(200);
+  },
+  'dragleave .drop-here'(event, instance) {
+    if (checkIfReadyEle()) return;
+    event.preventDefault();
+    instance.$('.drop-here').css('z-index', 1).removeClass('border-ora');
+    instance.$('.drop-desc').hide();
   }
 })
+
+function checkIfReadyEle() {
+  const ele = getDragEle();
+  if (ele !== '') {
+    return true;
+  }
+  return false;
+}
 
 Template.svgEditor.helpers({
     Svgs: () => {

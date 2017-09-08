@@ -37,6 +37,7 @@ Template.svgfile.events({
   'drop .drop-left'(event, instance) {
     event.preventDefault();
     const currentEle = instance.$(event.currentTarget).parents('.svg-editor-page').find('#' + getDragEle())[0];
+    setDragEle('');
     if(currentEle != instance.$(event.currentTarget).parent()[0]) {
         instance.$(event.currentTarget).parent().before(currentEle);
         updateDBsvg(event, instance);
@@ -45,6 +46,7 @@ Template.svgfile.events({
   'drop .drop-right'(event, instance) {
     event.preventDefault();
     const currentEle = instance.$(event.currentTarget).parents('.svg-editor-page').find('#' + getDragEle())[0];
+    setDragEle('');
     if(currentEle != instance.$(event.currentTarget).parent()[0]) {
         instance.$(event.currentTarget).parent().after(currentEle);
         updateDBsvg(event, instance);

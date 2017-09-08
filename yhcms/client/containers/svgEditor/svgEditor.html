@@ -15,7 +15,7 @@
       </div>
     </div>
   {{else}}
-    <div class="btn-group" style="margin-left:25px;" role="group" aria-label="...">
+    <div class="btn-group" style="margin-left:25px;z-index: 777;" role="group" aria-label="...">
       {{#if view}}
         <button type="button" class="btn btn-warning" style="border-radius: 8px;" id="cssCreate">生成CSS</button>
         <button type="button" class="btn btn-danger" style="margin-left:25px;border-radius: 8px;" id="delete">删除</button>
@@ -33,6 +33,12 @@
       </div>
     </div>
   {{/each}}
+  <div class="drop-here">
+    <div class="drop-desc">
+      <span>拖拽至此上传</span>
+      <img src="/images/upload-img.gif" alt="">
+    </div>
+  </div>
   <iframe style="display:none;" id="downloadSVGFrame"></iframe>
   <iframe style="display:none;" id="downloadTTFFrame"></iframe>
 </template>
