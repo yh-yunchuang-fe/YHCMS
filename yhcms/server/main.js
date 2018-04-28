@@ -59,6 +59,9 @@ Meteor.methods({
       });
     },
     deleteImage: function(fileIds) {
+      if (fileIds.length === 0) {
+        return '缺少参数';
+      }
       checking(this, { fileIds });
       return deleteImage(fileIds).then((res) => {
         console.log(res);

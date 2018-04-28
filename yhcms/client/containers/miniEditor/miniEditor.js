@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import { MiniCode } from '../../../universal/collections';
+import { MiniCode, DBimage } from '../../../universal/collections';
 import { get, set } from '../../stores/uiactions/storeList.action';
 import { getCitys, setCitys } from '../../stores/uiactions/storeCitys.action';
 import { showSpin, closeSpin } from '../../stores/uiactions/spin.action';
@@ -8,10 +8,11 @@ import Http from '../../Http';
 
 Template.miniEditor.onCreated(function() {
   const params = {
-    cityid: 1
+    cityid: 1,
+    isonlyscancode: 1
   };
   Http.get({
-    url: 'https://activity.yonghuivip.com/api/app/shop/storelist',
+    url: 'https://activity.yonghuivip.com/api/app/shop/cms/storelist',
     params
   })
   .then(response => {
@@ -67,12 +68,36 @@ Template.miniEditor.events({
       isonlyscancode: 1
     };
     Http.get({
-      url: 'https://activity.yonghuivip.com/api/app/shop/storelist',
+      url: 'https://activity.yonghuivip.com/api/app/shop/cms/storelist',
       params
     })
     .then(response => {
       if (response.code === 0 && response.data) {
         set(response.data.list);
+      }
+    })
+  },
+  'click #createShopId' (event, instance) {
+    const cityId = instance.$(event.currentTarget).parents('.mini-editore-page').find('#city').val();
+    console.log(cityId);
+    const params = {
+      cityid: cityId
+    };
+    Http.get({
+      url: 'https://activity.yonghuivip.com/api/app/shop/cms/storelist',
+      params
+    })
+    .then(response => {
+      if (response.code === 0 && response.data) {
+        response.data.list.map((key) => {
+          key.stores.map((_k) => {
+            const image = DBimage.findOne({ name: `${_k.name}.jpeg`, projId: 'LPAwe8HETN4j7SGXv' });
+            if (image) {
+              console.log(image);
+              DBimage.update({ _id: image._id }, { $set: { shopId: _k.id } }, { upsert: true });
+            }
+          });
+        });
       }
     })
   }
@@ -82,7 +107,6 @@ Template.miniEditor.helpers({
   mini: () => {
     const images = {};
     const _list = MiniCode.find({}).fetch();
-    console.log();
     if (_list.length > 0) {
       _list.map((key) => {
         images[key.storeId] = key.miniCodeUrl;

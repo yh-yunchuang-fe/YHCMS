@@ -14,34 +14,39 @@ function createCss(proj) {
         DBsvg.find({ projId: proj._id }, { sort: { index: 1 } }).map((key) => {
           sortName.push(key.name);
         });
-        svg2css({
-            baseDir: projPath,
-            cssFilePath: config.cssFilePath,
-            svgDir: `svg/${proj.name.replace(/\s+/g, '')}`,
-            iconName: 'yhicon',
-            sortName
-        }, Meteor.bindEnvironment((res) => {
-            if (res.result === true) {
-                const uploadFile = {
-                    path: res.path,
-                    name: res.name,
-                    meta: {
-                        proj: proj.name
-                    }
-                };
-                upload2qiniu(uploadFile, Meteor.bindEnvironment((res) => {
-                    const cssUrl = Projects.findOne({ _id: proj._id }).cssUrl;
-                    cssUrl.push({
-                        url: `${secret.BASE_URL}${res.key}`,
-                        createAt: Date.now()
-                    });
-                    Projects.update({ _id: proj._id }, { $set: { cssUrl: cssUrl } });
-                    resolve({url: `${secret.BASE_URL}${res.key}`, msg: 'svg to css 转换成功', res: true});
-                }));
-            } else {
-                resolve({msg: 'svg to css 转换失败', res: false});
-            }
-        }));
+        try {
+          svg2css({
+              baseDir: projPath,
+              cssFilePath: config.cssFilePath,
+              svgDir: `svg/${proj.name.replace(/\s+/g, '')}`,
+              iconName: 'yhicon',
+              sortName
+          }, Meteor.bindEnvironment((res) => {
+              if (res.result === true) {
+                  const uploadFile = {
+                      path: res.path,
+                      name: res.name,
+                      meta: {
+                          proj: proj.name
+                      }
+                  };
+                  upload2qiniu(uploadFile, Meteor.bindEnvironment((res) => {
+                      const cssUrl = Projects.findOne({ _id: proj._id }).cssUrl;
+                      cssUrl.push({
+                          url: `${secret.BASE_URL}${res.key}`,
+                          createAt: Date.now()
+                      });
+                      Projects.update({ _id: proj._id }, { $set: { cssUrl: cssUrl } });
+                      resolve({url: `${secret.BASE_URL}${res.key}`, msg: 'svg to css 转换成功', res: true});
+                  }));
+              } else {
+                  resolve({msg: 'svg to css 转换失败', res: false});
+              }
+          }));
+        } catch (err) {
+          console.log(err);
+          resolve({msg: 'svg to css 转换失败', res: false});
+        }
     });
 }
 

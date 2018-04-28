@@ -9,24 +9,56 @@ Template.svgfile.onCreated(function() {
   this.clicked = new ReactiveVar(false);
   initStore();
   this.currentData = new ReactiveVar(Template.currentData().svg);
+  (function() {
+    'use strict';
+    document.body.addEventListener('click', copy, true);
+      function copy(e) {
+      var
+        t = e.target,
+        c = t.dataset.copytarget,
+        inp = (c ? document.querySelector(c) : null);
+      if (inp && inp.select) {
+        inp.select();
+        try {
+          document.execCommand('copy');
+          inp.blur();
+        }
+        catch (err) {
+          alert('please press Ctrl/Cmd+C to copy');
+        }
+      }
+      }
+  })();
 })
 
 Template.svgfile.events({
   'click .svgfile'(event, instance) {
     event.preventDefault();
-    if (Meteor.user() && Meteor.user().profile.isView) {
-      const fileId = instance.currentData.get().fileId;
-      const collections = getStore();
-      if (!collections.svg.includes(fileId)) {
-        collections.svg.push(fileId);
-      } else {
-        const position = collections.svg.indexOf(fileId);
-        collections.svg.splice(position, 1);
+    const inp = instance.$(event.currentTarget).find('.name_span')[0];
+    if (inp && inp.select) {
+      const old = inp.value;
+      inp.value = `yhicon-${old}`;
+      inp.select();
+      try {
+        document.execCommand('copy');
+        inp.blur();
+        inp.value = old;
       }
-      setStore(collections);
-      const clicked = instance.clicked.get();
-      instance.clicked.set(!clicked);
+      catch (err) {
+        alert('please press Ctrl/Cmd+C to copy');
+      }
     }
+    const fileId = instance.currentData.get().fileId;
+    const collections = getStore();
+    if (!collections.svg.includes(fileId)) {
+      collections.svg.push(fileId);
+    } else {
+      const position = collections.svg.indexOf(fileId);
+      collections.svg.splice(position, 1);
+    }
+    setStore(collections);
+    const clicked = instance.clicked.get();
+    instance.clicked.set(!clicked);
   },
   'dragstart .svgfile'(event, instance) {
     setDragEle(instance.$(event.currentTarget).attr('id'));

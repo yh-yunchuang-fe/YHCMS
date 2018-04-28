@@ -29,6 +29,9 @@ function createMiniCode(params, _res) {
         };
         paramGet(url, jsonBody).then((res) => {
           global.access_token = res.access_token;
+          setTimeout(() => {
+            global.access_token = undefined;
+          }, 1000 * 60 * 60);
           getCodeUrl(params, _res);
         });
       } else {
@@ -50,7 +53,8 @@ function getCodeUrl(params, _res) {
   const tmpImage_path = path.join(uplaodPath, 'uploads/tmp/', `${now}.jpeg`);
   const url = getwxacode.replace('ACCESS_TOKEN', global.access_token);
   const jsonBody = {
-    path: `pages/scanbuyhome/index?code=${params.code}&shopid=${params.storeId}`
+    path: `pages/scanbuyhome/index?code=${params.code}&shopid=${params.storeId}`,
+    width: 1200
   };
   console.log(`小程序码路径 ====> ${jsonBody.path}`);
   fetch(url, {
@@ -95,6 +99,7 @@ function getCodeUrl(params, _res) {
             sellerId: params.sellerId,
             name : `${params.storeName}.jpeg`,
             size : '',
+            shopId: params.storeId,
             type : 'image/jpeg',
             src : `${BASE_URL}${ret.key}`,
             updateAt : Date.now()

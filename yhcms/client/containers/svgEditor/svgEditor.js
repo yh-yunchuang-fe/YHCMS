@@ -11,6 +11,7 @@ Template.svgEditor.onCreated(function() {
     createing: false,
     percent: 60
   });
+  this.selectAll = new ReactiveVar(false);
 })
 
 Template.svgEditor.events({
@@ -32,6 +33,14 @@ Template.svgEditor.events({
             ), 1000);
           }
       });
+  },
+  'click #selectAll'(event, instance) {
+    event.preventDefault();
+    const selectAll = instance.selectAll.get();
+    instance.selectAll.set(!selectAll);
+    $('.svgfile').each((index, el) => {
+      $(el).click();
+    });
   },
   'click #delete'(event, instance) {
     if (getStore().svg.length === 0) {
@@ -125,6 +134,12 @@ Template.svgEditor.helpers({
     createStatus: () => {
       return Template.instance().createStatus.get();
       // return
+    },
+    selectAll: () => {
+      if (Template.instance().selectAll.get()) {
+        return '取消全选';
+      }
+      return '全选';
     },
     proj: () => {
       const _id = FlowRouter.getParam('projectid');

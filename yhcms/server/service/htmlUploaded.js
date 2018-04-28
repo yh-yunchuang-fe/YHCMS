@@ -10,9 +10,10 @@ const projPath = path.join(config.uplaodPath, 'uploads');
 function htmlUploaded(file) {
   console.log(file.name);
   file.name = file.name.replace(/\s+/g, '');
-  const projHtmlPath = path.join(projPath, `/html/${file.meta.proj.replace(/\s+/g, '')}`);
+  const notReplaceProjHtmlPath = path.join(projPath, `/html/${file.meta.proj.replace(/\s+/g, '')}`);
+  const projHtmlPath = notReplaceProjHtmlPath.replace('&', '\\&');
   return new Promise((resolve, reject) => {
-    fs.rename(file.path, `${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
+    fs.rename(file.path, `${notReplaceProjHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err) {
       if (err) {
         DBhtml.remove({ fileId: file._id });
         Htmls.remove({ _id: file._id });
@@ -22,7 +23,7 @@ function htmlUploaded(file) {
           err: err
         });
       }
-      fs.stat(`${projHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err, stats) {
+      fs.stat(`${notReplaceProjHtmlPath}/${file.name}`, Meteor.bindEnvironment(function(err, stats) {
         if (err) {
           DBhtml.remove({ fileId: file._id });
           Htmls.remove({ _id: file._id });

@@ -15,6 +15,7 @@ Template.imageEditor.onCreated(function() {
     store: '2',
     shop: ''
   });
+  this._stores = new ReactiveVar([]);
   Http.get({
     url: 'https://activity.yonghuivip.com/api/app/shop/citys'
   })
@@ -22,6 +23,25 @@ Template.imageEditor.onCreated(function() {
     if (response.code === 0 && response.data) {
       const citys = response.data.citys;
       setCitys(citys);
+    }
+  })
+  const params = {
+    cityid: 1,
+    isonlyscancode: 1
+  };
+  Http.get({
+    url: 'https://activity.yonghuivip.com/api/app/shop/storelist',
+    params
+  })
+  .then(response => {
+    if (response.code === 0 && response.data) {
+      const _stores = [];
+      response.data.list.map((key) => {
+        key.stores.map((_k) => {
+          _stores.push(_k.id);
+        });
+      });
+      this._stores.set(_stores);
     }
   })
 })
@@ -90,6 +110,19 @@ Template.imageEditor.events({
     const miniSearch = instance.search.get();
     miniSearch.city = value;
     instance.search.set(miniSearch)
+    const params = {
+      cityid: event.currentTarget.value,
+      isonlyscancode: 1
+    };
+    Http.get({
+      url: 'https://activity.yonghuivip.com/api/app/shop/storelist',
+      params
+    })
+    .then(response => {
+      if (response.code === 0 && response.data) {
+        pushCityAvilableStores(response.data.list, instance);
+      }
+    })
   },
   'change #store'(event, instance) {
     const value = event.currentTarget.value;
@@ -98,6 +131,16 @@ Template.imageEditor.events({
     instance.search.set(miniSearch)
   }
 })
+
+function pushCityAvilableStores(list, instance) {
+  const _stores = [];
+  list.map((key) => {
+    key.stores.map((_k) => {
+      _stores.push(_k.id);
+    });
+  });
+  instance._stores.set(_stores);
+}
 
 function copy(obj) {
   const newObj = {};
@@ -111,6 +154,7 @@ function copy(obj) {
 
 Template.imageEditor.helpers({
     images: () => {
+      console.log(Template.instance()._stores ? Template.instance()._stores.get() : '');
       if (!Meteor.userId()) {
         return FlowRouter.go('/');
       }
@@ -119,6 +163,9 @@ Template.imageEditor.helpers({
         projId: FlowRouter.getParam('projectid')
       }
       if (filter.includes(options.projId)) {
+        options.shopId = {
+          $in: Template.instance()._stores ? Template.instance()._stores.get() : []
+        };
         if (search.city && search.city !== '') {
           options.cityId = search.city;
         }
