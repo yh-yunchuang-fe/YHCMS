@@ -9,7 +9,7 @@ import Http from '../../Http';
 Template.miniEditor.onCreated(function() {
   const params = {
     cityid: 1,
-    isonlyscancode: 1
+    isonlyscancode: 0
   };
   Http.get({
     url: 'https://activity.yonghuivip.com/api/app/shop/cms/storelist',
@@ -65,7 +65,7 @@ Template.miniEditor.events({
   'change #city' (event, instance) {
     const params = {
       cityid: event.currentTarget.value,
-      isonlyscancode: 1
+      isonlyscancode: 0
     };
     Http.get({
       url: 'https://activity.yonghuivip.com/api/app/shop/cms/storelist',
